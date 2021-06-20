@@ -1,3 +1,4 @@
+// Copyright 2021 Victoria Carlsten
 #include <chrono>
 #include <ctime>
 #include <iostream>
