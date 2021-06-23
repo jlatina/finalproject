@@ -35,6 +35,7 @@ int main() {
 
     account_manager account_manager;
 
+    // hope to get rid of this
     string new_username = account_manager.username + '\r';
     string new_attempted_user = account_manager.attempted_username + '\r';
 
@@ -51,7 +52,7 @@ int main() {
     while(getline(inf, line))
     {
 
-        // replace break with bool variable, it's weird
+        // hope to replace break with bool variable
         if (new_username == line) break;
     
     }
