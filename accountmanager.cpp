@@ -1,18 +1,32 @@
-// Warning: This code is very ugly and won't work. Just storing it here to log changes.
+// not fully operational yet
 
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <vector>
 
 using std::string;
 using std::cin;
 using std::cout;
 using std::fstream;
+using std::ifstream;
+using std::vector;
+
+ifstream open_file(){
+
+    ifstream ifs;
+    ifs.open("accountinfo.txt", std::ifstream::in);
+
+    if (!ifs) {
+        std::ofstream ifs{"accountinfo.txt"}; // havent tested
+    }
+    return ifs; 
+}
 
 class account_manager {
 
 public:
-
+    
     string password,
            username,
            attempted_username,
@@ -24,74 +38,105 @@ public:
 
 };
 
-bool has_spaces(string username_input){
-    for (int i = 0; i < username_input.size(); i ++){
+class login: public account_manager {
 
-    }
+public:
 
-}
+    account_manager account;
+    ifstream ifs = open_file();      
+    string line, strings;
+    login();
 
-int main() {
+};
 
-    account_manager account_manager;
-
-    // hope to get rid of this
-    string new_username = account_manager.username + '\r';
-    string new_attempted_user = account_manager.attempted_username + '\r';
-
-    std::ifstream inf("accountinfo.txt");
-
-
-    if (!inf) {
-        std::ofstream outf{"accountinfo.cpp"};
-    }
-
-    // if user clicks sign up button:
-
-    string line;
-    while(getline(inf, line))
-    {
-
-        // hope to replace break with bool variable
-        if (new_username == line) break;
-    
-    }
-
-    if (new_username == line) cout << "Sorry, that username already exists!" << "\n";
-    else {
-        cout << "Please create your password: ";
-        cin >> new_password;
-        cout << "Your account has been created!" << "\n";
-    }
-
-    // if user clicks login button:
-
-    // account_manager.login();
-
+login::login() {
 
         cout << "Enter username: ";
-        cin >> attempted_username;
-        while(getline(inf, line)){
-            if (new_attempted_user == line)
-                account_manager.exists = true;
+        cin >> account.attempted_username;
+        while(ifs >> strings) {
+
+            if (account.attempted_username == strings){
+                account.exists = true;
+                break;
+            }
+            
+            getline(ifs, line, '\n');
         }
 
-        if (account_manager.exists == true) {
+        strings.clear(); // not sure whether to keep or not
+        if (account.exists == true) {
             cout << "\n" << "Enter password: ";
-            cin >> attempted_password;
+            cin >> account.attempted_password;
 
-           while(getline(inf, line, '\n')){
-            if (new_attempted_user == line)
-                account_manager.exists = true;
-        }
+            getline(ifs, line, ';');
+            while(ifs >> strings) {
+                
+                if (account.attempted_password == strings){
+                    account.exists = true;
+                    break;
+                }
 
-            if (attempted_password == password) {
+                getline(ifs, line, ';');
+
+            }
+
+            if (account.attempted_password == password) {
                 cout << "Successfully logged in" << "\n";
             }
         }
         else
             cout << "Username doesn't exist in database" << "\n";
 
+    }
+
+class account_register: public account_manager {
+
+public:
+
+    account_manager account;
+    ifstream ifs = open_file();
+    vector <string> tokens;
+    string line, strings;
+    account_register();
+
+};
+
+account_register::account_register(){
+
+    cout << "Create username: ";
+    cin >> new_username;
+
+    while(ifs >> strings)
+    {
+
+        if (new_username == strings){
+            account.exists = true;
+            break;
+        } 
+        getline(ifs, line, '\n');
+
+    }
+
+    if (account.exists == true) cout << "Sorry, that username already exists!" << "\n";
+    else {
+        cout << "Please create your password: ";
+        cin >> new_password;
+        cout << "Your account has been created!" << "\n";
+    }
+
+}
+
+int main() {
+
+    account_manager account;
+
+    // if user clicks sign up button:
+
+    account_register();
+
+    // if user clicks login button:
+
+    login();
 
     return 0;
 }
