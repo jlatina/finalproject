@@ -76,3 +76,14 @@ public:
             window.draw(text);
         }
 };
+
+
+// EXAMPLE
+//
+        Button easy_button("Easy",50,{200,100},sf::Color::Cyan,sf::Color::Blue);
+        easy_button.setFont(font);
+        easy_button.setPosition({600,250});
+        
+//
+
+
