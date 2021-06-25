@@ -1,5 +1,3 @@
-// not fully operational yet
-
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -12,17 +10,6 @@ using std::fstream;
 using std::ifstream;
 using std::vector;
 
-ifstream open_file(){
-
-    ifstream ifs;
-    ifs.open("accountinfo.txt", std::ifstream::in);
-
-    if (!ifs) {
-        std::ofstream ifs{"accountinfo.txt"}; // havent tested
-    }
-    return ifs; 
-}
-
 class account_manager {
 
 public:
@@ -32,111 +19,115 @@ public:
            attempted_username,
            attempted_password,
            new_username,
-           new_password;
+           new_password,
+           line, line2, line3,
+           strings, strings2, strings3;
 
     bool exists;
 
-};
+    int count = 0, count2 = 0;
 
-class login: public account_manager {
+    void login(ifstream *ifs){
 
-public:
-
-    account_manager account;
-    ifstream ifs = open_file();      
-    string line, strings;
-    login();
-
-};
-
-login::login() {
-
+        (*ifs).close();
+        (*ifs).open("accountinfo.txt");
         cout << "Enter username: ";
-        cin >> account.attempted_username;
-        while(ifs >> strings) {
+        cin >> attempted_username;
+        while((*ifs) >> strings) {
 
-            if (account.attempted_username == strings){
-                account.exists = true;
+            count++;
+            if (attempted_username == strings){
+                exists = true;
                 break;
+            } else { 
+                exists = false;
             }
             
-            getline(ifs, line, '\n');
+            getline((*ifs), line, '\n');
         }
 
-        strings.clear(); // not sure whether to keep or not
-        if (account.exists == true) {
-            cout << "\n" << "Enter password: ";
-            cin >> account.attempted_password;
+        if (exists == true) {
+            cout << "Enter password: ";
+            cin >> attempted_password;
 
-            getline(ifs, line, ';');
-            while(ifs >> strings) {
+            (*ifs).close();
+            (*ifs).open("accountinfo.txt");
+            getline((*ifs), line2, ';');
+            while((*ifs) >> strings2) {
                 
-                if (account.attempted_password == strings){
-                    account.exists = true;
+                count2++;
+                if (attempted_password == strings2 && count == count2){
+                    exists = true;
                     break;
+                } else {
+                    exists = false;
                 }
 
-                getline(ifs, line, ';');
+                getline((*ifs), line2, ';');
 
             }
 
-            if (account.attempted_password == password) {
+            if (exists == true) {
                 cout << "Successfully logged in" << "\n";
+            } else {
+                cout << "Incorrect password" << "\n";
             }
         }
         else
             cout << "Username doesn't exist in database" << "\n";
 
+
     }
 
-class account_register: public account_manager {
 
-public:
-
-    account_manager account;
-    ifstream ifs = open_file();
-    vector <string> tokens;
-    string line, strings;
-    account_register();
-
-};
-
-account_register::account_register(){
+    void account_register(ifstream *ifs){
 
     cout << "Create username: ";
     cin >> new_username;
 
-    while(ifs >> strings)
+    while((*ifs) >> strings3)
     {
 
-        if (new_username == strings){
-            account.exists = true;
+        if (new_username == strings3){
+            exists = true;
             break;
         } 
-        getline(ifs, line, '\n');
+        getline((*ifs), line3, '\n');
 
     }
 
-    if (account.exists == true) cout << "Sorry, that username already exists!" << "\n";
+    if (exists == true) cout << "Sorry, that username already exists!" << "\n";
     else {
         cout << "Please create your password: ";
         cin >> new_password;
         cout << "Your account has been created!" << "\n";
     }
 
-}
+
+    }
+
+};
+
 
 int main() {
 
     account_manager account;
+    ifstream ifs;
+
+    ifs.open("accountinfo.txt");
+
+    if (!ifs) {
+        std::ofstream ifs{"accountinfo.txt"}; // havent tested
+    }
+
 
     // if user clicks sign up button:
 
-    account_register();
+    // account.account_register();
 
     // if user clicks login button:
 
-    login();
+    account.login(&ifs);
 
     return 0;
 }
