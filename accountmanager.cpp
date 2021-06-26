@@ -1,14 +1,13 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include <vector>
 
 using std::string;
 using std::cin;
 using std::cout;
 using std::fstream;
 using std::ifstream;
-using std::vector;
+using std::ofstream;
 
 class account_manager {
 
@@ -27,10 +26,11 @@ public:
 
     int count = 0, count2 = 0;
 
+    ofstream append_to_file;
+
     void login(ifstream *ifs){
 
-        (*ifs).close();
-        (*ifs).open("accountinfo.txt");
+        // (*ifs).open("accountinfo.txt");
         cout << "Enter username: ";
         cin >> attempted_username;
         while((*ifs) >> strings) {
@@ -76,9 +76,7 @@ public:
         else
             cout << "Username doesn't exist in database" << "\n";
 
-
     }
-
 
     void account_register(ifstream *ifs){
 
@@ -100,9 +98,10 @@ public:
     else {
         cout << "Please create your password: ";
         cin >> new_password;
+        append_to_file.open("accountinfo.txt", std::ios_base::app);
+        append_to_file << new_username << " ; " << new_password << " | " << "highscore" << "\n";
         cout << "Your account has been created!" << "\n";
     }
-
 
     }
 
@@ -117,17 +116,20 @@ int main() {
     ifs.open("accountinfo.txt");
 
     if (!ifs) {
-        std::ofstream ifs{"accountinfo.txt"}; // havent tested
+        ofstream create_file("accountinfo.txt");
+        ifs.open("accountinfo.txt");
     }
 
 
     // if user clicks sign up button:
 
-    // account.account_register();
+    account.account_register(&ifs);
 
     // if user clicks login button:
 
-    account.login(&ifs);
+    // account.login(&ifs);
+
+    ifs.close();
 
     return 0;
 }
