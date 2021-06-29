@@ -13,26 +13,19 @@ using std::cout;
 using std::to_string;
 using std::string;
 
-#define DELETE_KEY 8
-#define ENTER_KEY 13
+#define BACKSPACE_KEY 8
 #define ESCAPE_KEY 27
-void mental_math_main_page();
-
 
 
 class Textfield {
  public:
   sf::Text Text_field;
   std::ostringstream text;
-  bool isSelected = false;
-  bool haslimit = false;
-  int limit;
+  bool isSelected = true;
+ 
+  Textfield(int char_size, sf::Color color, bool sel) {
 
-  Textfield() { }
-
-  Textfield(int size, sf::Color color, bool sel) {
-
-    Text_field.setCharacterSize(size);
+    Text_field.setCharacterSize(char_size);
     Text_field.setColor(color);
     isSelected = sel;
     if(sel)
@@ -56,16 +49,8 @@ class Textfield {
     Text_field.setPosition(position);
 
   }
-  void setLimit(bool ToF) {
-
-    haslimit = ToF;
-
-  }
-  void setLimit(bool ToF, int lim) {
-    haslimit = ToF;
-    limit = lim;
-
-  }
+  
+ 
   void setSelected(bool sel) {
 
     isSelected = sel;
@@ -99,10 +84,8 @@ class Textfield {
 
       int chartyped = input.text.unicode;
       if(chartyped < 128) {
-        if(haslimit) {
-          if(text.str().length() <= limit) {
-            inputLogic(chartyped);
-          } else if(text.str().length() >  limit && chartyped == DELETE_KEY)
+        
+        if(text.str().length() >  limit && chartyped == BACKSPACE_KEY)
             deletelastchar();
 
 
@@ -114,16 +97,16 @@ class Textfield {
 
     }
 
-  }
+  
 
 
   void inputLogic(int chartyped) {
 
-    if(chartyped != DELETE_KEY && chartyped != ENTER_KEY && chartyped != ESCAPE_KEY) {
+    if(chartyped != BACKSPACE_KEY  && chartyped != ESCAPE_KEY) {
 
       text << static_cast<char>(chartyped);
 
-    } else if( chartyped == DELETE_KEY) {
+    } else if( chartyped == BACKSPACE_KEY) {
 
       if(text.str().length() > 0) {
         deletelastchar();
@@ -132,6 +115,9 @@ class Textfield {
 
 
     }
+   
+
+
     Text_field.setString(text.str() + "_");
 
 
@@ -236,46 +222,50 @@ class Button {
 
 
 
+class Mental_Math {
 
-
-int main() {
-
-
+public:
+  int counter{0}, number_1, number_2, result,difficulty,random_op_number;;
+  string player_answer;
+  char current_operation;
   vector<int> easy {100, 100, 10, 100};
   vector <int> medium {500, 500, 20, 200};
   vector <int> hard {10000, 10000, 30, 300};
   vector <vector<int>> difficulty_numbers {easy, medium, hard};
-
-  int number_1, number_2, result;
-  string player_answer;
-
-  int random_op_number;
-
-  char current_operation;
-
   vector <char> operations{'+', '*', '-', '/'};
+   
+  sf::Text Score;
+  sf::Text text_diff;
+  sf::Font font;
+  sf::Texture texture;
+  sf::Event event;
+  sf::Text Equation;
+  
+  
+  
+  
+  
+  
+  
 
-
-  srand ( time(NULL) ); // setting seed for random numbers
 
 
 
   // SFML
 
   // GAME PAGE
-  sf::Event event;
-
-  sf::RenderWindow window(sf::VideoMode(1350, 1350), "Math Game");
-  window.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width * 0.5 - window.getSize().x * 0.5, sf::VideoMode::getDesktopMode().height * 0.5 - window.getSize().y * 0.5));
-
-  sf::Font font;
-  font.loadFromFile("/usr/share/fonts/truetype/ubuntu/Ubuntu-BI.ttf");
+ 
 
 
+  void First_Screen(){
+
+  
+   sf::RenderWindow window(sf::VideoMode(1350,1350),"Math Game");
+   // setting window location to the center of the screen 
+   window.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width * 0.5 - window.getSize().x * 0.5, sf::VideoMode::getDesktopMode().height * 0.5 - window.getSize().y * 0.5));
 
   // Setting background
 
-  sf::Texture texture;
   if(!texture.loadFromFile("/home/ece-student/Desktop/inclass/icecave.png")) {
 
     std::cout << "Load Failed" << "\n";
@@ -285,19 +275,12 @@ int main() {
   sf::Sprite sprite;
   sprite.setTexture(texture);
 
-
-
-
-
-
-
-
-
+font.loadFromFile("/usr/share/fonts/truetype/ubuntu/Ubuntu-BI.ttf");
 
   // Equation settings
 
 
-  sf::Text Equation;
+ 
   Equation.setFont(font);
   Equation.setFillColor(sf::Color::White);
   Equation.setOutlineColor(sf::Color::Blue);
@@ -313,36 +296,11 @@ int main() {
 
 
 
-  sf::Text Score;
-  Score.setFont(font);
-  Score.setFillColor(sf::Color::Blue);
-  Score.setOutlineColor(sf::Color::White);
-  Score.setOutlineThickness(2);
-  Score.setCharacterSize(50);
+  
+
 
   // text field for user input
-
-  Textfield Textbox(50, sf::Color::White, true);
-  Textbox.setFont(font);
-  Textbox.setPosition({500, 500});
-
-
-
-
-
-
-
-
-  int counter{0}, difficulty;
-
-  while (window.isOpen()) {
-
-
-
-
-
-
-    sf::Text text_diff;
+    
     text_diff.setFont(font);
     text_diff.setOutlineColor(sf::Color::Black);
     text_diff.setFillColor(sf::Color::Blue);
@@ -373,160 +331,37 @@ int main() {
     go_back_button.setFont(font);
     go_back_button.setPosition({0, 0});
 
+    
 
-
-
-
-
+    while(window.isOpen()){
 
 
     while (window.pollEvent(event)) {
 
-
       if(event.type == sf::Event::MouseButtonPressed) {
-
-
 
         if(easy_button.isMouseHover(window))
           difficulty = 0;
         if(medium_button.isMouseHover(window))
           difficulty = 1;
         if(hard_button.isMouseHover(window))
-          difficulty = 3;
+          difficulty = 2;
 
         if(easy_button.isMouseHover(window) or medium_button.isMouseHover(window) or hard_button.isMouseHover(window)) {
-          window.clear();
-          while(window.isOpen()) {
-            vector<int> diff_nums = difficulty_numbers.at(difficulty);
-
-            // GAME PAGE
-
-            char current_operation = operations.at(rand() % 4);
-
-
-            if(current_operation == '+') {
-
-
-              number_1 = (rand() % diff_nums.at(0) + 1);
-              number_2 = (rand() % number_1 + 1);
-
-
-              result = number_1 + number_2 ;
-            } else if(current_operation == '-') {
-              number_1 = (rand() % diff_nums.at(1) + 1);
-              number_2 = (rand() % number_1 + 1);
-
-              result = number_1 - number_2;
-            } else if(current_operation == '*') {
-              number_1 = (rand() % diff_nums.at(2) + 1);
-              number_2 = (rand() % diff_nums.at(2) + 1);
-
-              result = number_1 * number_2;
-            } else if (current_operation == '/') {
-              number_1 = (rand() % diff_nums.at(3) + 1);
-              number_2 = (rand() % number_1 + 1);
-              while(number_1 % number_2 != 0)
-                number_2 = (rand() % number_1 + 2);
-
-              result = number_1 / number_2;
-            }
-
-            Equation.setString(to_string(number_1) + " " + current_operation + " " + to_string(number_2) + " = ");
-
-
-
-
-
-
-            while (window.pollEvent(event)) {
-
-
-              if(event.type == sf::Event::Closed)
-                window.close();
-
-              if(event.type == sf::Event::TextEntered) {
-
-                Textbox.typedon(event);
-              }
-
-            }
-            window.clear();
-            window.draw(Equation);
-            Textbox.LetsDraw(window);
-            window.display();
-            int ent_counter = 0;
-            
-            while (ent_counter = 0){
-
-
-
-
-              while (window.pollEvent(event)) {
-
-
-             if(event.type == sf::Event::MouseButtonPressed) {
-
-
-
-          if(go_back_button.isMouseHover(window)){
-            window.close();
-          }
+          window.close();
+          Game_Menu();
+          return;
           
-      
+
+          
           }
-
-          if(event.type == sf::Event::Closed)
-                window.close();
-
-      }
-
-
-
-
-            }
-
-            if(Textbox.Text_field == result){
-
-    
-            }else{
-
-             
-            }
-
-
-
-
-          }
-
-
-
-
-
         }
-
-
-
-
-      }
-
-
-
-
-
-
-
-
-
-
-
 
       if(event.type == sf::Event::Closed)
         window.close();
 
-
-
-    }
-    if(easy_button.isMouseHover(window))
+ }
+  if(easy_button.isMouseHover(window))
       easy_button.setBackgColor(sf::Color::White);
     else
       easy_button.setBackgColor(sf::Color::Blue);
@@ -559,12 +394,7 @@ int main() {
     go_back_button.LetsDraw(window);
     window.draw(text_diff);
     window.display();
-
-
-
-
-
-
+ 
 
 
 
@@ -573,8 +403,189 @@ int main() {
 
 
 }
-void mental_math_main_page(){
-  
+  void Game_Menu(){
+
+
+            // GAME PAGE
+
+        srand ( time(NULL) ); // setting seed for random numbers
+       Button go_back_button("GO BACK", 50, {250, 100}, sf::Color::Cyan, sf::Color::Blue);
+        go_back_button.setFont(font);
+        go_back_button.setPosition({0, 0});
+        Textfield Textbox(50, sf::Color::Blue, true);
+        Textbox.setFont(font);
+        Textbox.setPosition({500, 500});
+        
+        sf::RenderWindow window(sf::VideoMode(1350,1350),"Math Game");
+        
+        // setting window location to the center of the screen 
+        window.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width * 0.5 - window.getSize().x * 0.5, sf::VideoMode::getDesktopMode().height * 0.5 - window.getSize().y * 0.5));
+
+    sf::Event gameEvent;
+          vector<int> diff_nums = difficulty_numbers.at(difficulty);
+
+
+            Score.setFont(font);
+            Score.setFillColor(sf::Color::Blue);
+            Score.setOutlineColor(sf::Color::White);
+            Score.setOutlineThickness(2);
+            Score.setCharacterSize(50);
+            Score.setPosition({10,200});
+
+
+
+            
+            int user_input;
+            bool correct_case = true;
+            int score_value = 0;
+            Score.setString("Score : " + to_string(score_value));
+
+          while(window.isOpen()){
+
+            if(correct_case == true){
+
+            if(current_operation == '+') {
+
+            char current_operation = operations.at(rand() % 4);
+
+              number_1 = (rand() % diff_nums.at(0) + 1);
+              number_2 = (rand() % number_1 + 1);
+
+
+              result = number_1 + number_2 ;
+            } else if(current_operation == '-') {
+              number_1 = (rand() % diff_nums.at(1) + 1);
+              number_2 = (rand() % number_1 + 1);
+
+              result = number_1 - number_2;
+            } else if(current_operation == '*') {
+              number_1 = (rand() % diff_nums.at(2) + 1);
+              number_2 = (rand() % diff_nums.at(2) + 1);
+
+              result = number_1 * number_2;
+            } else if (current_operation == '/') {
+              number_1 = (rand() % diff_nums.at(3) + 1);
+              number_2 = (rand() % number_1 + 2);
+              while(number_1 % number_2 != 0)
+                number_2 = (rand() % number_1 + 2);
+
+              result = number_1 / number_2;
+            }
+            correct_case = false;
+          }
+            Equation.setString(to_string(number_1) + " " + current_operation + " " + to_string(number_2) + " = ");
+
+            window.clear();
+            window.draw(Equation);
+            window.draw(Score);
+            go_back_button.LetsDraw(window);
+            Textbox.LetsDraw(window);
+            window.display();
+           
+       
+
+
+
+
+
+            
+              std::stringstream(Textbox.getText()) >> user_input;
+             
+
+
+          
+
+            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)){
+              
+
+              if(result == user_input){
+
+               score_value++;
+               Textbox.text.clear();
+               Textbox.LetsDraw(window);
+               correct_case = true;
+               Score.setString("Score : " + to_string(score_value));
+
+              }
+            
+             
+
+
+
+            }
+
+
+            while (window.pollEvent(gameEvent)) {
+
+               if(gameEvent.type == sf::Event::TextEntered) {
+
+                Textbox.typedon(gameEvent);
+              }
+
+
+             if(gameEvent.type == sf::Event::MouseButtonPressed) {
+
+            if(go_back_button.isMouseHover(window)){
+            window.close();
+            First_Screen();
+            return;
+          }
+          
+      
+          }
+
+          if(gameEvent.type == sf::Event::Closed){
+             window.close();
+              return;
+          }
+               
+
+      }
+          
+
+
+
+              
+              
+             
+
+            
+
+
+
+
+
+            
+            
+
+}
+
+
+          }
+
+
+
+
+};
+
+
+
+
+
+
+
+
+
+
+int main() {
+
+
+  Mental_Math Mental_Math_Game;
+
+  Mental_Math_Game.First_Screen();
+
+
+
 }
 
 
