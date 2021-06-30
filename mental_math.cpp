@@ -49,9 +49,9 @@ class Button {
 
 
   void setPosition(sf::Vector2f position) {
-    shape_Button.setPosition(position);         // Setting Position for Text
+    shape_Button.setPosition(position);
 
-    float x = (position.x + shape_Button.getGlobalBounds().width / 2) - (text.getGlobalBounds().width / 2);
+    float x = (position.x + shape_Button.getGlobalBounds().width / 2) - (text.getGlobalBounds().width / 2); // centering the text in the box
     float y = (position.y + shape_Button.getGlobalBounds().height / 2) - (text.getGlobalBounds().height / 2);
     text.setPosition({x, y});
 
@@ -61,7 +61,7 @@ class Button {
 
   bool isMouseHover(sf::RenderWindow &window) {
 
-    // getting button locations to check if the mouse is on the button
+
     float b_x = shape_Button.getPosition().x;
     float b_y = shape_Button.getPosition().y;
 
@@ -80,13 +80,12 @@ class Button {
 
   }
 
-  void setTextColor(sf::Color color) { // setting text color
+  void setTextColor(sf::Color color) {
 
     text.setColor(color);
   }
 
-  void setBackgColor(sf::Color color) { // setting button back ground color
-
+  void setBackgColor(sf::Color color) {
     shape_Button.setFillColor(color);
   }
 
@@ -123,65 +122,48 @@ class Textfield {
 
   }
 
-  void setFont(sf::Font &font) { // setting the font
+  void setFont(sf::Font &font) {
 
     Textbox_Text.setFont(font);
 
   }
 
-  void setPosition(sf::Vector2f position) { // setting the position of the text box
+  void setPosition(sf::Vector2f position) {
     Textbox_Text.setPosition(position);
 
   }
 
-  void setLimit(bool is_haslimit, int lim) { // setting the  limit if there is one
+  void setLimit(bool is_haslimit, int lim) { // number of char limit
     haslimit = is_haslimit;
     limit = lim;
 
   }
-  void setSelected(bool select) {
-
-    isSelected = select;
-    if(!select) {
-
-      std::string t = text.str();
-      std::string newT = "";
-      for(int i = 0; i < t.length() - 1; i++) {
-        newT += t.at(i);
-
-      }
-      Textbox_Text.setString(newT);
 
 
-
-    }
-  }
-
-  string getText() { // getting the textbox text
+  string getText() {
 
     return text.str();
 
   }
-  void resetText() { // resetting the text
-
+  void resetText() {
     text.str("");
 
 
   }
 
 
-  void LetsDraw(sf::RenderWindow &window) { // drawing the textbox
+  void LetsDraw(sf::RenderWindow &window) {
     window.draw(Textbox_Text);
   }
 
-  void Read_and_Write_Input(sf::Event input) {// converting event unicode into text
+  void Read_and_Write_Input(sf::Event input) {   // converting event unicode into text
 
     if(isSelected) {
 
       int typed_character = input.text.unicode;
-      if(typed_character < 128) { // checking for special characters that we would not want.
+      if(typed_character < 128) {       // checking for special characters and backspace key
         if(haslimit) {
-          if(text.str().length() <= limit) { // checking for number of chars if there is a limit.
+          if(text.str().length() <= limit) {
             change_Textbox_Text(typed_character);
           } else if(text.str().length() >  limit && typed_character == BACKSPACE_KEY)
             deletelastchar();
@@ -189,7 +171,7 @@ class Textfield {
 
 
         } else
-          change_Textbox_Text(typed_character); // change the text
+          change_Textbox_Text(typed_character);
 
       }
 
@@ -202,11 +184,11 @@ class Textfield {
 
     if(typed_character != BACKSPACE_KEY  && typed_character != ESCAPE_KEY) {
 
-      text << static_cast<char>(typed_character);     // Checking if the user didnt press enter or backspace key and appending the characters.
+      text << static_cast<char>(typed_character);
 
     } else if( typed_character == BACKSPACE_KEY) {
 
-      if(text.str().length() > 0) {  // Deleting a character if the user presses backspace key.
+      if(text.str().length() > 0) {
         deletelastchar();
 
       }
@@ -221,7 +203,7 @@ class Textfield {
 
 
   }
-  void deletelastchar() {  //  Deletes last character when needed.
+  void deletelastchar() {
 
     std::string t = text.str();
     std::string newT = "";
@@ -237,8 +219,6 @@ class Textfield {
 
 
 };
-
-
 
 
 
@@ -265,20 +245,15 @@ class Mental_Math {
 
 
 
-
-
-
-
-  // GAME PAGE
-
-  void First_Screen() { // Difficulty choosing screen
+  void First_Screen() {
 
 
     sf::RenderWindow window(sf::VideoMode(1350, 1350), "Math Wizardry");
+
     // setting window location to the center of the screen
     window.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width * 0.5 - window.getSize().x * 0.5, sf::VideoMode::getDesktopMode().height * 0.5 - window.getSize().y * 0.5));
 
-    // Setting background
+
 
     if(!texture.loadFromFile("/home/ece-student/Desktop/inclass/icecave.png")) {
 
@@ -293,11 +268,6 @@ class Mental_Math {
 
 
 
-
-
-
-    // text field for user input
-
     text_diff.setFont(font);
     text_diff.setOutlineColor(sf::Color::Black);
     text_diff.setFillColor(sf::Color::Blue);
@@ -306,9 +276,6 @@ class Mental_Math {
     text_diff.setPosition(500, 100);
     text_diff.setCharacterSize(50);
 
-
-
-    // Button creations
 
     Button easy_button("Muggles", 50, {400, 100}, sf::Color::Cyan, sf::Color::Blue);
     easy_button.setFont(font);
@@ -330,8 +297,7 @@ class Mental_Math {
 
 
 
-    while(window.isOpen()) {
-
+    while(window.isOpen()) { // Setting the difficulty and starting the game
 
       while (window.pollEvent(event)) {
 
@@ -358,6 +324,9 @@ class Mental_Math {
           window.close();
 
       }
+
+      // Color change effect when the user hovers over the buttons
+
       if(easy_button.isMouseHover(window))
         easy_button.setBackgColor(sf::Color::White);
       else
@@ -379,33 +348,28 @@ class Mental_Math {
         go_back_button.setBackgColor(sf::Color::Blue);
 
 
-      // Drawing,Displaying
+
 
       window.clear();
       window.draw(sprite);
-      //window.draw(Equation);
-
       easy_button.LetsDraw(window);
       medium_button.LetsDraw(window);
       hard_button.LetsDraw(window);
       go_back_button.LetsDraw(window);
       window.draw(text_diff);
       window.display();
-
-
-
-
-
     }
 
 
   }
-  void Start_Screen() { // Starting screen
-    // Window settings
+  void Start_Screen() {
+
     sf::RenderWindow window(sf::VideoMode(1350, 1350), "Math Wizardry");
 
     // setting window position to the center of the screen
     window.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width * 0.5 - window.getSize().x * 0.5, sf::VideoMode::getDesktopMode().height * 0.5 - window.getSize().y * 0.5));
+
+
 
     sf::Text GameTitle;
     GameTitle.setFont(font);
@@ -414,6 +378,7 @@ class Mental_Math {
     GameTitle.setPosition({380, 150});
     GameTitle.setFillColor(sf::Color::Blue);
     GameTitle.setOutlineColor(sf::Color::Cyan);
+
 
 
     Button start_button("START", 60, {300, 200}, sf::Color::Cyan, sf::Color::Blue);
@@ -425,24 +390,22 @@ class Mental_Math {
     go_back_button.setPosition({0, 0});
     sf::Event gameEvent;
 
+
     while(window.isOpen()) {
 
 
       while (window.pollEvent(gameEvent)) {
 
-
-
-
         if(gameEvent.type == sf::Event::MouseButtonPressed) {
 
           if(go_back_button.isMouseHover(window)) {
             window.close();
-            First_Screen();
+            First_Screen(); // going back to the previous page
             return;
           }
           if(start_button.isMouseHover(window)) {
             window.close();
-            Game_Screen();
+            Game_Screen(); // starting the game
             return;
 
           }
@@ -457,6 +420,9 @@ class Mental_Math {
 
 
       }
+
+
+
       if(go_back_button.isMouseHover(window))
         go_back_button.setBackgColor(sf::Color::White);
       else
@@ -482,26 +448,22 @@ class Mental_Math {
 
 
 
+  void Game_Screen() {
 
+    sf::Event gameEvent;
 
-
-
-  void Game_Screen() { // Game Screen
-
-
-    // Window settings
     sf::RenderWindow window(sf::VideoMode(1350, 1350), "MATH WIZARDRY");
 
     // setting window position to the center of the screen
     window.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width * 0.5 - window.getSize().x * 0.5, sf::VideoMode::getDesktopMode().height * 0.5 - window.getSize().y * 0.5));
 
 
+    srand (time(NULL)); // setting seed for random numbers
 
-    // GAME PAGE
 
-    srand ( time(NULL) ); // setting seed for random numbers
 
-    // Go Back button creation
+    // Textbox creation for user input
+
 
     Textfield Textbox(50, sf::Color::Blue, true);
     Textbox.setFont(font);
@@ -509,32 +471,13 @@ class Mental_Math {
 
 
 
-
-
-    sf::Event gameEvent;
-
-
-
-    // Equation settings
-
-
-
     Equation.setFont(font);
-    Equation.setFillColor(sf::Color::White);
-    Equation.setOutlineColor(sf::Color::Blue);
-
-
-
-
     Equation.setFillColor(sf::Color::White);
     Equation.setOutlineColor(sf::Color::Blue);
     Equation.setPosition(530, 200);
     Equation.setOutlineThickness(2);
     Equation.setCharacterSize(80);
 
-
-
-    // sf::Score settings
 
     Score.setFont(font);
     Score.setFillColor(sf::Color::Blue);
@@ -552,7 +495,8 @@ class Mental_Math {
     Score.setString("SCORE : " + to_string(score_value));
     char current_operation;
 
-    //dealing with time
+
+    // 3 seconds count down settings
 
     int start_time_counter = 3;
     sf::Text start_countdown;
@@ -563,9 +507,10 @@ class Mental_Math {
     start_countdown.setFillColor(sf::Color::Blue);
     start_countdown.setOutlineColor(sf::Color::Cyan);
 
-    sf::Time Start_Count = sf::seconds(4);
+    sf::Time Start_Count = sf::seconds(4); // +1 seconds for delay
     sf::Time Game_Time = sf::seconds(64);
     sf::Time current_time;
+
 
     sf::Text Get_Ready;
     Get_Ready.setFont(font);
@@ -579,7 +524,7 @@ class Mental_Math {
 
     // 1 MINUTE COUNT DOWN
 
-    int game_time_counter = 64;
+    int game_time_counter = 64; // +4 seconds for  starting and delay
     sf::Text Game_countdown;
     Game_countdown.setFont(font);
     Game_countdown.setString("TIME LEFT : " + to_string(3));
@@ -589,12 +534,10 @@ class Mental_Math {
     Game_countdown.setFillColor(sf::Color::Blue);
     Game_countdown.setOutlineColor(sf::Color::White);
 
-sf::Clock clock;
+    sf::Clock clock;
     while(window.isOpen()) {
 
       while(start_time_counter > 0) { // 3 seconds count down
-
-
 
 
 
@@ -610,13 +553,13 @@ sf::Clock clock;
 
 
       }
-      
-        while(game_time_counter > 0) {
+
+      while(game_time_counter > 0) {  // Game  and 60 seconds countdown starts
 
         if(correct_case == true) {
           current_operation = operations.at(rand() % 4);
 
-          if(current_operation == '+') {  // setting up problem numbers.
+          if(current_operation == '+') {
 
 
             number_1 = (rand() % diff_nums.at(0) + 1);
@@ -646,12 +589,12 @@ sf::Clock clock;
         }
         Equation.setString(to_string(number_1) + " " + current_operation + " " + to_string(number_2) + " = ");
 
-        sf::Time current_time = Game_Time - clock.getElapsedTime();
+
+        sf::Time current_time = Game_Time - clock.getElapsedTime(); //countdown
+
 
         Game_countdown.setString("TIME LEFT : " + to_string( int(current_time.asSeconds())) + " SECONDS");
         game_time_counter = int(current_time.asSeconds());
-
-
 
 
 
@@ -665,10 +608,6 @@ sf::Clock clock;
 
 
         std::stringstream(Textbox.getText()) >> user_input;
-
-
-
-
 
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
 
@@ -711,36 +650,29 @@ sf::Clock clock;
         }
 
       }
-    window.clear();
-    window.close();
-    Final_Screen(score_value,difficulty);
 
 
+      window.clear();
+      window.close();
+      Final_Screen(score_value, difficulty);
 
-
-
-
-
-
-
+    }
 
   }
+  void Final_Screen(int score_value, int difficulty) {
 
-}
-void Final_Screen(int score_value,int difficulty){
+    sf::RenderWindow window(sf::VideoMode(1350, 1350), "MATH WIZARDRY");
 
-   sf::RenderWindow window(sf::VideoMode(1350, 1350), "MATH WIZARDRY");
+    // setting window position to the center of the screen
+    window.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width * 0.5 - window.getSize().x * 0.5, sf::VideoMode::getDesktopMode().height * 0.5 - window.getSize().y * 0.5));
 
-      // setting window position to the center of the screen
-      window.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width * 0.5 - window.getSize().x * 0.5, sf::VideoMode::getDesktopMode().height * 0.5 - window.getSize().y * 0.5));
-
-      sf::Event gameEvent;
+    sf::Event gameEvent;
 
     sf::Text Well_Done;
     Well_Done.setFont(font);
     Well_Done.setString("Well Done !");
     Well_Done.setCharacterSize(80);
-    Well_Done.setPosition({400,50});
+    Well_Done.setPosition({400, 50});
     Well_Done.setOutlineThickness(2);
     Well_Done.setFillColor(sf::Color::Blue);
     Well_Done.setOutlineColor(sf::Color::White);
@@ -756,23 +688,22 @@ void Final_Screen(int score_value,int difficulty){
     run_Score.setOutlineColor(sf::Color::White);
 
 
-
-
-    int personal_best_score = 100;  // <<---- LINK HIGHEST SCORE  // IF THERE ISNT YET SET IT TO 0
+    int personal_best_score = 100;  // <--- jon link it and remove the comment.
 
     sf::Text Personal_Best;
     Personal_Best.setFont(font);
     Personal_Best.setString("Personal Best : " + to_string(personal_best_score));
     Personal_Best.setCharacterSize(60);
-    Personal_Best.setPosition({400,450});
+    Personal_Best.setPosition({400, 450});
     Personal_Best.setOutlineThickness(2);
     Personal_Best.setFillColor(sf::Color::Blue);
     Personal_Best.setOutlineColor(sf::Color::White);
 
 
-    Button return_2_menu_button("RETURN TO MAIN MENU",30, {200,150}, sf::Color::Cyan, sf::Color::Blue);
+    Button return_2_menu_button("MAIN MENU", 30, {200, 100}, sf::Color::Cyan, sf::Color::Blue);
     return_2_menu_button.setFont(font);
-    return_2_menu_button.setPosition({0,600});
+    return_2_menu_button.setPosition({0, 800});
+
 
     sf::Text Difficulty_mode;
     Difficulty_mode.setFont(font);
@@ -781,91 +712,70 @@ void Final_Screen(int score_value,int difficulty){
     Difficulty_mode.setOutlineThickness(2);
 
     if(difficulty == 0) {
-          Difficulty_mode.setString("Muggles Mode");
-          Difficulty_mode.setFillColor(sf::Color::Green);
-          Difficulty_mode.setOutlineColor(sf::Color::White);
+      Difficulty_mode.setString("Muggles Mode");
+      Difficulty_mode.setFillColor(sf::Color::Green);
+      Difficulty_mode.setOutlineColor(sf::Color::White);
 
 
-        } else if(difficulty == 1) {
+    } else if(difficulty == 1) {
 
-          Difficulty_mode.setString("Baby Wizard Mode");
-          Difficulty_mode.setFillColor(sf::Color::Blue);
-          Difficulty_mode.setOutlineColor(sf::Color::White);
-
-
-        } else {
-          Difficulty_mode.setString("Master Wizard Mode");
-          Difficulty_mode.setFillColor(sf::Color::Red);
-          Difficulty_mode.setOutlineColor(sf::Color::White);
-
-        }
-
-        while(window.isOpen()){
-
-     
+      Difficulty_mode.setString("Baby Wizard Mode");
+      Difficulty_mode.setFillColor(sf::Color::Blue);
+      Difficulty_mode.setOutlineColor(sf::Color::White);
 
 
-          window.clear();
-          window.draw(Difficulty_mode);
-          window.draw(Personal_Best);
-          window.draw(run_Score);
-          window.draw(Well_Done);
-          return_2_menu_button.LetsDraw(window);
-          window.display();
+    } else {
+      Difficulty_mode.setString("Master Wizard Mode");
+      Difficulty_mode.setFillColor(sf::Color::Red);
+      Difficulty_mode.setOutlineColor(sf::Color::White);
 
-          while (window.pollEvent(gameEvent)) {
+    }
 
-         
-
-          if(gameEvent.type == sf::Event::MouseButtonPressed) {
-            if(return_2_menu_button.isMouseHover(window)){
-              window.close();
-              First_Screen();
+    while(window.isOpen()) {
 
 
-            }
+      window.clear();
+      window.draw(Difficulty_mode);
+      window.draw(Personal_Best);
+      window.draw(run_Score);
+      window.draw(Well_Done);
+      return_2_menu_button.LetsDraw(window);
+      window.display();
 
-          }
 
-          if(gameEvent.type == sf::Event::Closed) {
+      while (window.pollEvent(gameEvent)) {
+
+
+
+        if(gameEvent.type == sf::Event::MouseButtonPressed) {
+          if(return_2_menu_button.isMouseHover(window)) {
             window.close();
-            return;
+            First_Screen();
+
+
           }
 
-
         }
 
+        if(gameEvent.type == sf::Event::Closed) {
+          window.close();
+          return;
         }
-
-
-
-
-}
-
-
-
-
-
+      }
+    }
+  }
 };
-
-
-
-
-
-
-
-
 
 
 int main() {
 
 
-    Mental_Math Mental_Math_Game;
+  Mental_Math Mental_Math_Game;
 
-    Mental_Math_Game.First_Screen();
+  Mental_Math_Game.First_Screen();
 
 
-    } 
+}
 
 
 
