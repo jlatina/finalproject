@@ -34,7 +34,6 @@ class Button {
 
   Button(string text_s, int charsize, sf::Vector2f size, sf::Color textColor, sf::Color BackgColor) {
 
-
     shape_Button.setSize(size);
     shape_Button.setFillColor(BackgColor);
 
@@ -42,16 +41,14 @@ class Button {
     text.setCharacterSize(charsize);
     text.setFillColor(textColor);
 
-
-
   }
-
 
 
   void setPosition(sf::Vector2f position) {
     shape_Button.setPosition(position);
-
-    float x = (position.x + shape_Button.getGlobalBounds().width / 2) - (text.getGlobalBounds().width / 2); // centering the text in the box
+    
+   // centering the text in the box
+    float x = (position.x + shape_Button.getGlobalBounds().width / 2) - (text.getGlobalBounds().width / 2); 
     float y = (position.y + shape_Button.getGlobalBounds().height / 2) - (text.getGlobalBounds().height / 2);
     text.setPosition({x, y});
 
@@ -61,14 +58,11 @@ class Button {
 
   bool isMouseHover(sf::RenderWindow &window) {
 
-
     float b_x = shape_Button.getPosition().x;
     float b_y = shape_Button.getPosition().y;
 
-
     float m_x = sf::Mouse::getPosition(window).x;
     float m_y = sf::Mouse::getPosition(window).y;
-
 
     float sum_b_pos_width = shape_Button.getPosition().x + shape_Button.getGlobalBounds().width;
     float sum_b_pos_height = shape_Button.getPosition().y + shape_Button.getGlobalBounds().height;
@@ -86,12 +80,12 @@ class Button {
   }
 
   void setBackgColor(sf::Color color) {
-    shape_Button.setFillColor(color);
+   
+   shape_Button.setFillColor(color);
   }
 
 
   void LetsDraw(sf::RenderWindow &window) {
-    // Drawing button and text
     window.draw(shape_Button);
     window.draw(text);
   }
@@ -105,7 +99,7 @@ class Textfield {
   bool haslimit = true;
   int limit;
 
-
+ 
   Textfield(int char_size, sf::Color color, bool select) {
 
     Textbox_Text.setCharacterSize(char_size);
@@ -116,44 +110,39 @@ class Textfield {
     else
       Textbox_Text.setString("");
 
+   }
 
-
-
-
-  }
-
+ 
   void setFont(sf::Font &font) {
 
     Textbox_Text.setFont(font);
-
-  }
+ }
 
   void setPosition(sf::Vector2f position) {
-    Textbox_Text.setPosition(position);
 
+   Textbox_Text.setPosition(position);
   }
 
   void setLimit(bool is_haslimit, int lim) { // number of char limit
-    haslimit = is_haslimit;
+   
+   haslimit = is_haslimit;
     limit = lim;
-
   }
-
 
   string getText() {
 
     return text.str();
-
   }
-  void resetText() {
-    text.str("");
+  
+ void resetText() {
 
-
-  }
+  text.str("");
+ }
 
 
   void LetsDraw(sf::RenderWindow &window) {
-    window.draw(Textbox_Text);
+  
+   window.draw(Textbox_Text);
   }
 
   void Read_and_Write_Input(sf::Event input) {   // converting event unicode into text
@@ -168,8 +157,6 @@ class Textfield {
           } else if(text.str().length() >  limit && typed_character == BACKSPACE_KEY)
             deletelastchar();
 
-
-
         } else
           change_Textbox_Text(typed_character);
 
@@ -179,7 +166,6 @@ class Textfield {
 
   }
 
-
   void change_Textbox_Text(int typed_character) {  // Dynamically changing the text as the user types on the keyboard.
 
     if(typed_character != BACKSPACE_KEY  && typed_character != ESCAPE_KEY) {
@@ -188,23 +174,18 @@ class Textfield {
 
     } else if( typed_character == BACKSPACE_KEY) {
 
-      if(text.str().length() > 0) {
+     if(text.str().length() > 0) {
         deletelastchar();
 
       }
-
-
     }
 
 
-
-    Textbox_Text.setString(text.str() + "_");
-
-
-
+   Textbox_Text.setString(text.str() + "_");
   }
-  void deletelastchar() {
-
+  
+ void deletelastchar() {
+ 
     std::string t = text.str();
     std::string newT = "";
     for(int i = 0; i < t.length() - 1; i++) {
@@ -244,15 +225,12 @@ class Mental_Math {
 
 
 
-
   void First_Screen() {
-
 
     sf::RenderWindow window(sf::VideoMode(1350, 1350), "Math Wizardry");
 
     // setting window location to the center of the screen
     window.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width * 0.5 - window.getSize().x * 0.5, sf::VideoMode::getDesktopMode().height * 0.5 - window.getSize().y * 0.5));
-
 
 
     if(!texture.loadFromFile("/home/ece-student/Desktop/inclass/icecave.png")) {
@@ -265,7 +243,6 @@ class Mental_Math {
     sprite.setTexture(texture);
 
     font.loadFromFile("/usr/share/fonts/truetype/ubuntu/Ubuntu-BI.ttf");
-
 
 
     text_diff.setFont(font);
@@ -297,7 +274,7 @@ class Mental_Math {
 
 
 
-    while(window.isOpen()) { // Setting the difficulty and starting the game
+     while(window.isOpen()) { // Setting the difficulty and starting the game
 
       while (window.pollEvent(event)) {
 
@@ -314,7 +291,6 @@ class Mental_Math {
             window.close();
             Start_Screen();
             return;
-
 
 
           }
@@ -370,7 +346,6 @@ class Mental_Math {
     window.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width * 0.5 - window.getSize().x * 0.5, sf::VideoMode::getDesktopMode().height * 0.5 - window.getSize().y * 0.5));
 
 
-
     sf::Text GameTitle;
     GameTitle.setFont(font);
     GameTitle.setString("|  MATH WIZARDRY |");
@@ -378,7 +353,6 @@ class Mental_Math {
     GameTitle.setPosition({380, 150});
     GameTitle.setFillColor(sf::Color::Blue);
     GameTitle.setOutlineColor(sf::Color::Cyan);
-
 
 
     Button start_button("START", 60, {300, 200}, sf::Color::Cyan, sf::Color::Blue);
@@ -393,8 +367,7 @@ class Mental_Math {
 
     while(window.isOpen()) {
 
-
-      while (window.pollEvent(gameEvent)) {
+    while (window.pollEvent(gameEvent)) {
 
         if(gameEvent.type == sf::Event::MouseButtonPressed) {
 
@@ -410,7 +383,6 @@ class Mental_Math {
 
           }
 
-
         }
 
         if(gameEvent.type == sf::Event::Closed) {
@@ -421,8 +393,6 @@ class Mental_Math {
 
       }
 
-
-
       if(go_back_button.isMouseHover(window))
         go_back_button.setBackgColor(sf::Color::White);
       else
@@ -432,7 +402,7 @@ class Mental_Math {
       else
         start_button.setBackgColor(sf::Color::Blue);
 
-
+     
       window.clear();
       window.draw(GameTitle);
       go_back_button.LetsDraw(window);
@@ -442,10 +412,7 @@ class Mental_Math {
     }
 
 
-
   }
-
-
 
 
   void Game_Screen() {
@@ -457,13 +424,13 @@ class Mental_Math {
     // setting window position to the center of the screen
     window.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width * 0.5 - window.getSize().x * 0.5, sf::VideoMode::getDesktopMode().height * 0.5 - window.getSize().y * 0.5));
 
+   // setting seed for random numbers
 
-    srand (time(NULL)); // setting seed for random numbers
+   srand (time(NULL)); 
 
 
 
     // Textbox creation for user input
-
 
     Textfield Textbox(50, sf::Color::Blue, true);
     Textbox.setFont(font);
@@ -496,7 +463,7 @@ class Mental_Math {
     char current_operation;
 
 
-    // 3 seconds count down settings
+    // 3 seconds countdown settings
 
     int start_time_counter = 3;
     sf::Text start_countdown;
@@ -522,7 +489,7 @@ class Mental_Math {
     Get_Ready.setOutlineColor(sf::Color::White);
 
 
-    // 1 MINUTE COUNT DOWN
+    // 1 minute countdown settings
 
     int game_time_counter = 64; // +4 seconds for  starting and delay
     sf::Text Game_countdown;
@@ -597,14 +564,12 @@ class Mental_Math {
         game_time_counter = int(current_time.asSeconds());
 
 
-
         window.clear();
         window.draw(Equation);
         window.draw(Score);
         window.draw(Game_countdown);
         Textbox.LetsDraw(window);
         window.display();
-
 
 
         std::stringstream(Textbox.getText()) >> user_input;
@@ -623,8 +588,6 @@ class Mental_Math {
 
 
 
-
-
         }
 
 
@@ -634,7 +597,6 @@ class Mental_Math {
 
             Textbox.Read_and_Write_Input(gameEvent);
           }
-
 
           if(gameEvent.type == sf::Event::MouseButtonPressed) {
 
@@ -659,6 +621,7 @@ class Mental_Math {
     }
 
   }
+ 
   void Final_Screen(int score_value, int difficulty) {
 
     sf::RenderWindow window(sf::VideoMode(1350, 1350), "MATH WIZARDRY");
