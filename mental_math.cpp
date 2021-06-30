@@ -7,6 +7,7 @@
 #include <cstdlib>
 #include <sstream>
 
+
 using std::stoi;
 using std::vector;
 using std::cout;
@@ -16,129 +17,6 @@ using std::string;
 #define BACKSPACE_KEY 8
 #define ESCAPE_KEY 27
 
-
-class Textfield {
- public:
-  sf::Text Text_field;
-  std::ostringstream text;
-  bool isSelected = true;
- 
-  Textfield(int char_size, sf::Color color, bool sel) {
-
-    Text_field.setCharacterSize(char_size);
-    Text_field.setColor(color);
-    isSelected = sel;
-    if(sel)
-      Text_field.setString("_");
-    else
-      Text_field.setString("");
-
-
-
-
-
-  }
-
-  void setFont(sf::Font &font) {
-
-    Text_field.setFont(font);
-
-  }
-
-  void setPosition(sf::Vector2f position) {
-    Text_field.setPosition(position);
-
-  }
-  
- 
-  void setSelected(bool sel) {
-
-    isSelected = sel;
-    if(!sel) {
-
-      std::string t = text.str();
-      std::string newT = "";
-      for(int i = 0; i < t.length() - 1; i++) {
-        newT += t.at(i);
-
-      }
-      Text_field.setString(newT);
-
-
-
-    }
-  }
-
-  string getText() {
-
-    return text.str();
-
-  }
-  void LetsDraw(sf::RenderWindow &window) {
-    window.draw(Text_field);
-  }
-
-  void typedon(sf::Event input) {
-
-    if(isSelected) {
-
-      int chartyped = input.text.unicode;
-      if(chartyped < 128) {
-        
-        if(text.str().length() >  limit && chartyped == BACKSPACE_KEY)
-            deletelastchar();
-
-
-
-        } else
-          inputLogic(chartyped);
-
-      }
-
-    }
-
-  
-
-
-  void inputLogic(int chartyped) {
-
-    if(chartyped != BACKSPACE_KEY  && chartyped != ESCAPE_KEY) {
-
-      text << static_cast<char>(chartyped);
-
-    } else if( chartyped == BACKSPACE_KEY) {
-
-      if(text.str().length() > 0) {
-        deletelastchar();
-
-      }
-
-
-    }
-   
-
-
-    Text_field.setString(text.str() + "_");
-
-
-
-  }
-  void deletelastchar() {
-
-    std::string t = text.str();
-    std::string newT = "";
-    for(int i = 0; i < t.length() - 1; i++) {
-      newT += t.at(i);
-
-    }
-    text.str("");
-    text << newT;
-
-    Text_field.setString(text.str());
-  }
-
-
-};
 
 
 class Button {
@@ -220,6 +98,149 @@ class Button {
   }
 };
 
+class Textfield {
+ public:
+  sf::Text Textbox_Text;
+  std::ostringstream text;
+  bool isSelected = false;
+  bool haslimit = true;
+  int limit;
+
+
+  Textfield(int char_size, sf::Color color, bool select) {
+
+    Textbox_Text.setCharacterSize(char_size);
+    Textbox_Text.setColor(color);
+    isSelected = select;
+    if(select)
+      Textbox_Text.setString("_"); // having "_" if the textbox is selected
+    else
+      Textbox_Text.setString("");
+
+
+
+
+
+  }
+
+  void setFont(sf::Font &font) { // setting the font
+
+    Textbox_Text.setFont(font);
+
+  }
+
+  void setPosition(sf::Vector2f position) { // setting the position of the text box
+    Textbox_Text.setPosition(position);
+
+  }
+
+  void setLimit(bool is_haslimit, int lim) { // setting the  limit if there is one
+    haslimit = is_haslimit;
+    limit = lim;
+
+  }
+  void setSelected(bool select) {
+
+    isSelected = select;
+    if(!select) {
+
+      std::string t = text.str();
+      std::string newT = "";
+      for(int i = 0; i < t.length() - 1; i++) {
+        newT += t.at(i);
+
+      }
+      Textbox_Text.setString(newT);
+
+
+
+    }
+  }
+
+  string getText() { // getting the textbox text
+
+    return text.str();
+
+  }
+  void resetText(){ // resetting the text
+
+    text.str("");
+
+
+  }
+
+
+  void LetsDraw(sf::RenderWindow &window) { // drawing the textbox
+    window.draw(Textbox_Text);
+  }
+
+  void Read_and_Write_Input(sf::Event input) {// converting event unicode into text
+
+    if(isSelected) {
+
+      int typed_character = input.text.unicode;
+      if(typed_character < 128) { // checking for special characters that we would not want. 
+        if(haslimit) {
+          if(text.str().length() <= limit) { // checking for number of chars if there is a limit.
+            change_Textbox_Text(typed_character);
+          } else if(text.str().length() >  limit && typed_character == BACKSPACE_KEY)
+            deletelastchar();
+
+
+
+        } else
+          change_Textbox_Text(typed_character); // change the text 
+
+      }
+
+    }
+
+  }
+
+
+  void change_Textbox_Text(int typed_character) {  // Dynamically changing the text as the user types on the keyboard.
+
+    if(typed_character != BACKSPACE_KEY  && typed_character != ESCAPE_KEY) {  
+
+      text << static_cast<char>(typed_character);     // Checking if the user didnt press enter or backspace key and appending the characters.
+
+    } else if( typed_character == BACKSPACE_KEY) {
+
+      if(text.str().length() > 0) {  // Deleting a character if the user presses backspace key.
+        deletelastchar();
+
+      }
+
+
+    }
+   
+
+
+    Textbox_Text.setString(text.str() + "_");
+
+
+
+  }
+  void deletelastchar() {  //  Deletes last character when needed.
+
+    std::string t = text.str();
+    std::string newT = "";
+    for(int i = 0; i < t.length() - 1; i++) {
+      newT += t.at(i);
+
+    }
+    text.str("");
+    text << newT;
+
+    Textbox_Text.setString(text.str());
+  }
+
+
+};
+
+
+
+
 
 
 class Mental_Math {
@@ -246,17 +267,10 @@ public:
   
   
   
-  
 
-
-
-
-  // SFML
 
   // GAME PAGE
  
-
-
   void First_Screen(){
 
   
@@ -349,7 +363,7 @@ font.loadFromFile("/usr/share/fonts/truetype/ubuntu/Ubuntu-BI.ttf");
 
         if(easy_button.isMouseHover(window) or medium_button.isMouseHover(window) or hard_button.isMouseHover(window)) {
           window.close();
-          Game_Menu();
+          Start_Screen();
           return;
           
 
@@ -403,27 +417,161 @@ font.loadFromFile("/usr/share/fonts/truetype/ubuntu/Ubuntu-BI.ttf");
 
 
 }
-  void Game_Menu(){
+  void Start_Screen(){
+    // Window settings
+          sf::RenderWindow window(sf::VideoMode(1350,1350),"Math Game");
+        
+          // setting window position to the center of the screen
+          window.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width * 0.5 - window.getSize().x * 0.5, sf::VideoMode::getDesktopMode().height * 0.5 - window.getSize().y * 0.5));
+
+          sf::Text GameTitle;
+          GameTitle.setFont(font);
+          GameTitle.setString("|  THE MATH GAME |");
+          GameTitle.setCharacterSize(60);
+          GameTitle.setPosition({380,150});
+          GameTitle.setFillColor(sf::Color::Blue);
+          GameTitle.setOutlineColor(sf::Color::Cyan);
+
+
+          Button start_button("START",60,{300,200},sf::Color::Cyan,sf::Color::Blue);
+          start_button.setFont(font);
+          start_button.setPosition({500,400});
+
+          Button go_back_button("GO BACK", 50, {250, 100}, sf::Color::Cyan, sf::Color::Blue);
+          go_back_button.setFont(font);
+          go_back_button.setPosition({0, 0});
+          sf::Event gameEvent;
+
+          while(window.isOpen()){
+
+
+             while (window.pollEvent(gameEvent)) {
+
+               
+
+
+             if(gameEvent.type == sf::Event::MouseButtonPressed) {
+
+            if(go_back_button.isMouseHover(window)){
+            window.close();
+            First_Screen();
+            return;
+          }
+          if(start_button.isMouseHover(window)){
+            window.close();
+            Game_Screen();
+            return;
+
+          }
+          
+      
+          }
+
+          if(gameEvent.type == sf::Event::Closed){
+             window.close();
+              return;
+          }
+               
+
+      }
+      if(go_back_button.isMouseHover(window))
+      go_back_button.setBackgColor(sf::Color::White);
+    else
+      go_back_button.setBackgColor(sf::Color::Blue);
+    if(start_button.isMouseHover(window))
+      start_button.setBackgColor(sf::Color::White);
+    else
+      start_button.setBackgColor(sf::Color::Blue);
+
+
+      window.clear();
+      window.draw(GameTitle);
+      go_back_button.LetsDraw(window);
+      start_button.LetsDraw(window);
+      window.display();
+
+}
+
+
+
+  }
+
+
+
+
+
+
+
+
+  void Game_Screen(){
+
+
+          // Window settings
+          sf::RenderWindow window(sf::VideoMode(1350,1350),"Math Game");
+        
+          // setting window position to the center of the screen
+          window.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width * 0.5 - window.getSize().x * 0.5, sf::VideoMode::getDesktopMode().height * 0.5 - window.getSize().y * 0.5));
+
+
+
+
+          int time_counter = 0;
+
+          if(time_counter == 0){
+           sf::Text countdown;
+          countdown.setFont(font);
+          countdown.setString(to_string(3));
+          countdown.setCharacterSize(60);
+          countdown.setPosition({380,150});
+          countdown.setFillColor(sf::Color::Blue);
+          countdown.setOutlineColor(sf::Color::Cyan);
+
+
+          sf::Time Start_Count = sf::seconds(3);
+          sf::Clock clock;
+          sf::Time current_time;
+
+          while(window.isOpen() && int(current_time.asSeconds()) > 0){
+            sf::Time current_time = Start_Count - clock.getElapsedTime();
+
+            countdown.setString(to_string( int(current_time.asSeconds())));
+
+
+          window.clear();
+          window.draw(countdown);
+          window.display();
+            }
+            time_counter++;
+          window.clear();
+          }
+
+
+
+
+
+
+
+
 
 
             // GAME PAGE
 
         srand ( time(NULL) ); // setting seed for random numbers
-       Button go_back_button("GO BACK", 50, {250, 100}, sf::Color::Cyan, sf::Color::Blue);
-        go_back_button.setFont(font);
-        go_back_button.setPosition({0, 0});
-        Textfield Textbox(50, sf::Color::Blue, true);
-        Textbox.setFont(font);
-        Textbox.setPosition({500, 500});
         
-        sf::RenderWindow window(sf::VideoMode(1350,1350),"Math Game");
+        // Go Back button creation
+
+             Textfield Textbox(50, sf::Color::Blue, true);
+              Textbox.setFont(font);
+              Textbox.setPosition({500, 500});
+
         
-        // setting window location to the center of the screen 
-        window.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width * 0.5 - window.getSize().x * 0.5, sf::VideoMode::getDesktopMode().height * 0.5 - window.getSize().y * 0.5));
+      
+        
+        
+        sf::Event gameEvent;
+          
 
-    sf::Event gameEvent;
-          vector<int> diff_nums = difficulty_numbers.at(difficulty);
-
+          // sf::Score settings
 
             Score.setFont(font);
             Score.setFillColor(sf::Color::Blue);
@@ -433,20 +581,22 @@ font.loadFromFile("/usr/share/fonts/truetype/ubuntu/Ubuntu-BI.ttf");
             Score.setPosition({10,200});
 
 
-
+            vector<int> diff_nums = difficulty_numbers.at(difficulty); // getting difficulty numbers
             
             int user_input;
             bool correct_case = true;
             int score_value = 0;
             Score.setString("Score : " + to_string(score_value));
+            char current_operation;
+             while(window.isOpen()){
 
-          while(window.isOpen()){
+
 
             if(correct_case == true){
+             current_operation = operations.at(rand() % 4);
 
-            if(current_operation == '+') {
+            if(current_operation == '+') {  // setting up problem numbers.
 
-            char current_operation = operations.at(rand() % 4);
 
               number_1 = (rand() % diff_nums.at(0) + 1);
               number_2 = (rand() % number_1 + 1);
@@ -454,20 +604,20 @@ font.loadFromFile("/usr/share/fonts/truetype/ubuntu/Ubuntu-BI.ttf");
 
               result = number_1 + number_2 ;
             } else if(current_operation == '-') {
-              number_1 = (rand() % diff_nums.at(1) + 1);
-              number_2 = (rand() % number_1 + 1);
+              number_1 = rand() % diff_nums.at(1) + 1;
+              number_2 = rand() % number_1 + 1;
 
               result = number_1 - number_2;
             } else if(current_operation == '*') {
-              number_1 = (rand() % diff_nums.at(2) + 1);
-              number_2 = (rand() % diff_nums.at(2) + 1);
+              number_1 = rand() % diff_nums.at(2) + 1;
+              number_2 = rand() % diff_nums.at(2) + 1;
 
               result = number_1 * number_2;
             } else if (current_operation == '/') {
-              number_1 = (rand() % diff_nums.at(3) + 1);
-              number_2 = (rand() % number_1 + 2);
+              number_1 = rand() % diff_nums.at(3) + 1;
+              number_2 = rand() % number_1 + 1;
               while(number_1 % number_2 != 0)
-                number_2 = (rand() % number_1 + 2);
+                number_2 = rand() % number_1 + 2;
 
               result = number_1 / number_2;
             }
@@ -478,18 +628,12 @@ font.loadFromFile("/usr/share/fonts/truetype/ubuntu/Ubuntu-BI.ttf");
             window.clear();
             window.draw(Equation);
             window.draw(Score);
-            go_back_button.LetsDraw(window);
             Textbox.LetsDraw(window);
             window.display();
            
        
 
-
-
-
-
-            
-              std::stringstream(Textbox.getText()) >> user_input;
+          std::stringstream(Textbox.getText()) >> user_input;
              
 
 
@@ -501,10 +645,9 @@ font.loadFromFile("/usr/share/fonts/truetype/ubuntu/Ubuntu-BI.ttf");
               if(result == user_input){
 
                score_value++;
-               Textbox.text.clear();
-               Textbox.LetsDraw(window);
                correct_case = true;
                Score.setString("Score : " + to_string(score_value));
+               Textbox.resetText();
 
               }
             
@@ -519,18 +662,12 @@ font.loadFromFile("/usr/share/fonts/truetype/ubuntu/Ubuntu-BI.ttf");
 
                if(gameEvent.type == sf::Event::TextEntered) {
 
-                Textbox.typedon(gameEvent);
+                Textbox.Read_and_Write_Input(gameEvent);
               }
 
 
              if(gameEvent.type == sf::Event::MouseButtonPressed) {
 
-            if(go_back_button.isMouseHover(window)){
-            window.close();
-            First_Screen();
-            return;
-          }
-          
       
           }
 
