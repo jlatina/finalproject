@@ -161,7 +161,7 @@ class Textfield {
     if(isSelected) {
 
       int typed_character = input.text.unicode;
-      if(typed_character < 128) {       // checking for special characters and backspace key
+      if(typed_character < 128) {      
         if(haslimit) {
           if(text.str().length() <= limit) {
             change_Textbox_Text(typed_character);
@@ -702,7 +702,7 @@ class Mental_Math {
 
     Button return_2_menu_button("MAIN MENU", 30, {200, 100}, sf::Color::Cyan, sf::Color::Blue);
     return_2_menu_button.setFont(font);
-    return_2_menu_button.setPosition({0, 800});
+    return_2_menu_button.setPosition({0,0});
 
 
     sf::Text Difficulty_mode;
