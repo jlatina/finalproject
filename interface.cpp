@@ -4,7 +4,6 @@
 #include <ctime>
 #include <iostream>
 #include <SFML/Graphics.hpp>
-// #include <SFML/Audio.hpp>
 
 using std::to_string;
 using std::string;
@@ -25,7 +24,7 @@ sf::Text choose;
 sf::Text option;
 sf::Text logintext;
 sf::Text signup;
-// sf::Music music;
+sf::Text yestext;
 
 void playgame();
 void loginfunc();
@@ -33,7 +32,7 @@ void loginfunc();
 class interface {
  public:
 
-  void windowfunc() {
+  void windowfunc() {  // Main Menu
     sf::Event event;
     std::time_t time = std::time(NULL);
     time_t newtime = time;  // change this
@@ -103,10 +102,6 @@ class interface {
     login.setFillColor(sf::Color::White);
     login.setPosition(100, 82);
     login.setStyle(sf::Text::Style::Bold | sf::Text::Style::Underlined);
-
-// Music
-    // music.openFromFile("wii.wav");
-    // music.play();
 
     sf::Clock tracktime;
     double time_now = accuratetime();
@@ -195,7 +190,7 @@ class interface {
 };
 
 
-void eventfunc() {
+void eventfunc() { // Close window + Back Button
   sf::Event event;
   interface interface;
   auto location2 = back.getPosition();
@@ -211,34 +206,27 @@ void eventfunc() {
       window.close();
 
     if (event.type == sf::Event::MouseButtonPressed) {
-      // dx2 = 0;
-      // dy2 = 0;
       dx2 = location2.x - event.mouseButton.x;
       dy2 = location2.y - event.mouseButton.y;
 
-
       if (dx2 > -200 && dy2 > -50) {
         std::cout << "Back button pressed" << "\n";
-        // break;
-        // while (window.isOpen()) {
 
         while(window.isOpen()) {
           interface.windowfunc();
           eventfunc();
         }
-      
+
       }
 
     }
   }
 }
 
-void playgame() {
+void playgame() { // Ready to play game text
 
   interface interace;
   while (window.isOpen()) {
-// show game options
-
 
     eventfunc();
 
@@ -252,7 +240,7 @@ void playgame() {
     sprite_gbackground.scale(sf::Vector2f(1.4, 1.3)); //1st wider 2nd higher
     sprite_gbackground.setPosition(1, 1);
 
-// "Please Choose a Game" text
+// "Are you ready to become a Math Wizard?" text
     sf::Font font;
     font.loadFromFile("/usr/share/fonts/truetype/ubuntu/Ubuntu-BI.ttf");
     choose.setFont(font);
@@ -260,31 +248,23 @@ void playgame() {
     choose.setFillColor(sf::Color::White);
     // choose.setOutlineColor(sf::Color::Red);
     choose.setOutlineThickness(2);
-    choose.setPosition(280, 80);
-    choose.setCharacterSize(40);
-    choose.setStyle(sf::Text::Style::Bold | sf::Text::Style::Underlined);
+    choose.setPosition(140, 200);
+    choose.setCharacterSize(55);
+    choose.setStyle(sf::Text::Style::Bold);
 
-// Frame for math picture
-    sf::RectangleShape math(sf::Vector2f(30, 4));
-    math.setFillColor(sf::Color::White);
-    math.setPosition(230, 280);
-    math.setSize(sf::Vector2f(445, 249));
+    // Rectangle for yes text
+    sf::RectangleShape rec(sf::Vector2f(30, 4));
+    rec.setFillColor(sf::Color::Blue);
+    rec.setPosition(410, 350);
+    rec.setSize(sf::Vector2f(520, 60));
 
-// Filler frame for math picture
-    sf::RectangleShape math1(sf::Vector2f(30, 4));
-    math1.setFillColor(sf::Color::Black);
-    math1.setPosition(250, 290);
-    math1.setSize(sf::Vector2f(400, 230));
+    // Yes text
+    yestext.setFont(font);
+    yestext.setString("Yes, let the magic begin!");
+    yestext.setFillColor(sf::Color::White);
+    yestext.setPosition(410, 350);
+    yestext.setCharacterSize(45);
 
-// Math picture
-    sf::Image box1;
-    box1.loadFromFile("brain.png");
-    sf::Texture texture1;
-    texture1.loadFromImage(box1);
-    sf::Sprite sprite1;
-    sprite1.setTexture(texture1);
-    sprite1.scale(sf::Vector2f(0.5, 0.475)); //1st wider 2nd higher
-    sprite1.setPosition(275, 300);
 
 // Option to go back. Pressing this should lead back to main screen
     font.loadFromFile("/usr/share/fonts/truetype/ubuntu/Ubuntu-BI.ttf");
@@ -299,9 +279,8 @@ void playgame() {
     window.draw(sprite_gbackground);
     window.draw(choose);
     window.draw(back);
-    window.draw(math);
-    window.draw(math1);
-    window.draw(sprite1);
+    window.draw(rec);
+    window.draw(yestext);
     window.display();
   }
 
@@ -312,9 +291,9 @@ void loginfunc() { // Option to log-in or sign-up
   interface interace;
   while (window.isOpen()) {
 
-     eventfunc();
-      sf::Font font;
-      sf::Image box_gbackground;
+    eventfunc();
+    sf::Font font;
+    sf::Image box_gbackground;
     box_gbackground.loadFromFile("magic.png");
     sf::Texture texture_gbackground;
     texture_gbackground.loadFromImage(box_gbackground);
