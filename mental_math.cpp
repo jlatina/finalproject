@@ -162,7 +162,7 @@ class Textfield {
     return text.str();
 
   }
-  void resetText(){ // resetting the text
+  void resetText() { // resetting the text
 
     text.str("");
 
@@ -179,7 +179,7 @@ class Textfield {
     if(isSelected) {
 
       int typed_character = input.text.unicode;
-      if(typed_character < 128) { // checking for special characters that we would not want. 
+      if(typed_character < 128) { // checking for special characters that we would not want.
         if(haslimit) {
           if(text.str().length() <= limit) { // checking for number of chars if there is a limit.
             change_Textbox_Text(typed_character);
@@ -189,7 +189,7 @@ class Textfield {
 
 
         } else
-          change_Textbox_Text(typed_character); // change the text 
+          change_Textbox_Text(typed_character); // change the text
 
       }
 
@@ -200,7 +200,7 @@ class Textfield {
 
   void change_Textbox_Text(int typed_character) {  // Dynamically changing the text as the user types on the keyboard.
 
-    if(typed_character != BACKSPACE_KEY  && typed_character != ESCAPE_KEY) {  
+    if(typed_character != BACKSPACE_KEY  && typed_character != ESCAPE_KEY) {
 
       text << static_cast<char>(typed_character);     // Checking if the user didnt press enter or backspace key and appending the characters.
 
@@ -213,7 +213,7 @@ class Textfield {
 
 
     }
-   
+
 
 
     Textbox_Text.setString(text.str() + "_");
@@ -245,8 +245,8 @@ class Textfield {
 
 class Mental_Math {
 
-public:
-  int counter{0}, number_1, number_2, result,difficulty,random_op_number;;
+ public:
+  int counter{0}, number_1, number_2, result, difficulty, random_op_number;;
   string player_answer;
   char current_operation;
   vector<int> easy {100, 100, 10, 100};
@@ -254,67 +254,50 @@ public:
   vector <int> hard {10000, 10000, 30, 300};
   vector <vector<int>> difficulty_numbers {easy, medium, hard};
   vector <char> operations{'+', '*', '-', '/'};
-   
+
   sf::Text Score;
   sf::Text text_diff;
   sf::Font font;
   sf::Texture texture;
   sf::Event event;
   sf::Text Equation;
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
 
 
   // GAME PAGE
- 
-  void First_Screen(){
 
-  
-   sf::RenderWindow window(sf::VideoMode(1350,1350),"Math Game");
-   // setting window location to the center of the screen 
-   window.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width * 0.5 - window.getSize().x * 0.5, sf::VideoMode::getDesktopMode().height * 0.5 - window.getSize().y * 0.5));
-
-  // Setting background
-
-  if(!texture.loadFromFile("/home/ece-student/Desktop/inclass/icecave.png")) {
-
-    std::cout << "Load Failed" << "\n";
-
-  }
-
-  sf::Sprite sprite;
-  sprite.setTexture(texture);
-
-font.loadFromFile("/usr/share/fonts/truetype/ubuntu/Ubuntu-BI.ttf");
-
-  // Equation settings
+  void First_Screen() { // Difficulty choosing screen
 
 
- 
-  Equation.setFont(font);
-  Equation.setFillColor(sf::Color::White);
-  Equation.setOutlineColor(sf::Color::Blue);
+    sf::RenderWindow window(sf::VideoMode(1350, 1350), "Math Wizardry");
+    // setting window location to the center of the screen
+    window.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width * 0.5 - window.getSize().x * 0.5, sf::VideoMode::getDesktopMode().height * 0.5 - window.getSize().y * 0.5));
+
+    // Setting background
+
+    if(!texture.loadFromFile("/home/ece-student/Desktop/inclass/icecave.png")) {
+
+      std::cout << "Load Failed" << "\n";
+
+    }
+
+    sf::Sprite sprite;
+    sprite.setTexture(texture);
+
+    font.loadFromFile("/usr/share/fonts/truetype/ubuntu/Ubuntu-BI.ttf");
 
 
 
 
-  Equation.setFillColor(sf::Color::White);
-  Equation.setOutlineColor(sf::Color::Blue);
-  Equation.setPosition(500, 200);
-  Equation.setOutlineThickness(2);
-  Equation.setCharacterSize(80);
 
 
+    // text field for user input
 
-  
-
-
-  // text field for user input
-    
     text_diff.setFont(font);
     text_diff.setOutlineColor(sf::Color::Black);
     text_diff.setFillColor(sf::Color::Blue);
@@ -327,16 +310,16 @@ font.loadFromFile("/usr/share/fonts/truetype/ubuntu/Ubuntu-BI.ttf");
 
     // Button creations
 
-    Button easy_button("Easy", 50, {200, 100}, sf::Color::Cyan, sf::Color::Blue);
+    Button easy_button("Muggles", 50, {200, 100}, sf::Color::Cyan, sf::Color::Blue);
     easy_button.setFont(font);
     easy_button.setPosition({600, 250});
 
 
-    Button medium_button("Medium", 50, {200, 100}, sf::Color::Cyan, sf::Color::Blue);
+    Button medium_button("Baby Wizard", 50, {200, 100}, sf::Color::Cyan, sf::Color::Blue);
     medium_button.setFont(font);
     medium_button.setPosition({600, 450});
 
-    Button hard_button("Hard", 50, {200, 100}, sf::Color::Cyan, sf::Color::Blue);
+    Button hard_button("Master Wizard", 50, {200, 100}, sf::Color::Cyan, sf::Color::Blue);
     hard_button.setFont(font);
     hard_button.setPosition({600, 650});
 
@@ -345,143 +328,143 @@ font.loadFromFile("/usr/share/fonts/truetype/ubuntu/Ubuntu-BI.ttf");
     go_back_button.setFont(font);
     go_back_button.setPosition({0, 0});
 
-    
-
-    while(window.isOpen()){
 
 
-    while (window.pollEvent(event)) {
+    while(window.isOpen()) {
 
-      if(event.type == sf::Event::MouseButtonPressed) {
 
-        if(easy_button.isMouseHover(window))
-          difficulty = 0;
-        if(medium_button.isMouseHover(window))
-          difficulty = 1;
-        if(hard_button.isMouseHover(window))
-          difficulty = 2;
+      while (window.pollEvent(event)) {
 
-        if(easy_button.isMouseHover(window) or medium_button.isMouseHover(window) or hard_button.isMouseHover(window)) {
-          window.close();
-          Start_Screen();
-          return;
-          
+        if(event.type == sf::Event::MouseButtonPressed) {
 
-          
+          if(easy_button.isMouseHover(window))
+            difficulty = 0;
+          if(medium_button.isMouseHover(window))
+            difficulty = 1;
+          if(hard_button.isMouseHover(window))
+            difficulty = 2;
+
+          if(easy_button.isMouseHover(window) or medium_button.isMouseHover(window) or hard_button.isMouseHover(window)) {
+            window.close();
+            Start_Screen();
+            return;
+
+
+
           }
         }
 
-      if(event.type == sf::Event::Closed)
-        window.close();
+        if(event.type == sf::Event::Closed)
+          window.close();
 
- }
-  if(easy_button.isMouseHover(window))
-      easy_button.setBackgColor(sf::Color::White);
-    else
-      easy_button.setBackgColor(sf::Color::Blue);
+      }
+      if(easy_button.isMouseHover(window))
+        easy_button.setBackgColor(sf::Color::White);
+      else
+        easy_button.setBackgColor(sf::Color::Blue);
 
-    if(medium_button.isMouseHover(window))
-      medium_button.setBackgColor(sf::Color::White);
-    else
-      medium_button.setBackgColor(sf::Color::Blue);
+      if(medium_button.isMouseHover(window))
+        medium_button.setBackgColor(sf::Color::White);
+      else
+        medium_button.setBackgColor(sf::Color::Blue);
 
-    if(hard_button.isMouseHover(window))
-      hard_button.setBackgColor(sf::Color::White);
-    else
-      hard_button.setBackgColor(sf::Color::Blue);
+      if(hard_button.isMouseHover(window))
+        hard_button.setBackgColor(sf::Color::White);
+      else
+        hard_button.setBackgColor(sf::Color::Blue);
 
-    if(go_back_button.isMouseHover(window))
-      go_back_button.setBackgColor(sf::Color::White);
-    else
-      go_back_button.setBackgColor(sf::Color::Blue);
-
-
-    // Drawing,Displaying
-
-    window.clear();
-    window.draw(sprite);
-    //window.draw(Equation);
-
-    easy_button.LetsDraw(window);
-    medium_button.LetsDraw(window);
-    hard_button.LetsDraw(window);
-    go_back_button.LetsDraw(window);
-    window.draw(text_diff);
-    window.display();
- 
+      if(go_back_button.isMouseHover(window))
+        go_back_button.setBackgColor(sf::Color::White);
+      else
+        go_back_button.setBackgColor(sf::Color::Blue);
 
 
+      // Drawing,Displaying
+
+      window.clear();
+      window.draw(sprite);
+      //window.draw(Equation);
+
+      easy_button.LetsDraw(window);
+      medium_button.LetsDraw(window);
+      hard_button.LetsDraw(window);
+      go_back_button.LetsDraw(window);
+      window.draw(text_diff);
+      window.display();
+
+
+
+
+
+    }
 
 
   }
-
-
-}
-  void Start_Screen(){
+  void Start_Screen() { // Starting screen
     // Window settings
-          sf::RenderWindow window(sf::VideoMode(1350,1350),"Math Game");
-        
-          // setting window position to the center of the screen
-          window.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width * 0.5 - window.getSize().x * 0.5, sf::VideoMode::getDesktopMode().height * 0.5 - window.getSize().y * 0.5));
+    sf::RenderWindow window(sf::VideoMode(1350, 1350), "Math Wizardry");
 
-          sf::Text GameTitle;
-          GameTitle.setFont(font);
-          GameTitle.setString("|  THE MATH GAME |");
-          GameTitle.setCharacterSize(60);
-          GameTitle.setPosition({380,150});
-          GameTitle.setFillColor(sf::Color::Blue);
-          GameTitle.setOutlineColor(sf::Color::Cyan);
+    // setting window position to the center of the screen
+    window.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width * 0.5 - window.getSize().x * 0.5, sf::VideoMode::getDesktopMode().height * 0.5 - window.getSize().y * 0.5));
 
-
-          Button start_button("START",60,{300,200},sf::Color::Cyan,sf::Color::Blue);
-          start_button.setFont(font);
-          start_button.setPosition({500,400});
-
-          Button go_back_button("GO BACK", 50, {250, 100}, sf::Color::Cyan, sf::Color::Blue);
-          go_back_button.setFont(font);
-          go_back_button.setPosition({0, 0});
-          sf::Event gameEvent;
-
-          while(window.isOpen()){
+    sf::Text GameTitle;
+    GameTitle.setFont(font);
+    GameTitle.setString("|  MATH WIZARDRY |");
+    GameTitle.setCharacterSize(60);
+    GameTitle.setPosition({380, 150});
+    GameTitle.setFillColor(sf::Color::Blue);
+    GameTitle.setOutlineColor(sf::Color::Cyan);
 
 
-             while (window.pollEvent(gameEvent)) {
+    Button start_button("START", 60, {300, 200}, sf::Color::Cyan, sf::Color::Blue);
+    start_button.setFont(font);
+    start_button.setPosition({500, 400});
 
-               
+    Button go_back_button("GO BACK", 50, {250, 100}, sf::Color::Cyan, sf::Color::Blue);
+    go_back_button.setFont(font);
+    go_back_button.setPosition({0, 0});
+    sf::Event gameEvent;
+
+    while(window.isOpen()) {
 
 
-             if(gameEvent.type == sf::Event::MouseButtonPressed) {
+      while (window.pollEvent(gameEvent)) {
 
-            if(go_back_button.isMouseHover(window)){
+
+
+
+        if(gameEvent.type == sf::Event::MouseButtonPressed) {
+
+          if(go_back_button.isMouseHover(window)) {
             window.close();
             First_Screen();
             return;
           }
-          if(start_button.isMouseHover(window)){
+          if(start_button.isMouseHover(window)) {
             window.close();
             Game_Screen();
             return;
 
           }
-          
-      
-          }
 
-          if(gameEvent.type == sf::Event::Closed){
-             window.close();
-              return;
-          }
-               
+
+        }
+
+        if(gameEvent.type == sf::Event::Closed) {
+          window.close();
+          return;
+        }
+
 
       }
       if(go_back_button.isMouseHover(window))
-      go_back_button.setBackgColor(sf::Color::White);
-    else
-      go_back_button.setBackgColor(sf::Color::Blue);
-    if(start_button.isMouseHover(window))
-      start_button.setBackgColor(sf::Color::White);
-    else
-      start_button.setBackgColor(sf::Color::Blue);
+        go_back_button.setBackgColor(sf::Color::White);
+      else
+        go_back_button.setBackgColor(sf::Color::Blue);
+      if(start_button.isMouseHover(window))
+        start_button.setBackgColor(sf::Color::White);
+      else
+        start_button.setBackgColor(sf::Color::Blue);
 
 
       window.clear();
@@ -490,7 +473,7 @@ font.loadFromFile("/usr/share/fonts/truetype/ubuntu/Ubuntu-BI.ttf");
       start_button.LetsDraw(window);
       window.display();
 
-}
+    }
 
 
 
@@ -503,203 +486,364 @@ font.loadFromFile("/usr/share/fonts/truetype/ubuntu/Ubuntu-BI.ttf");
 
 
 
-  void Game_Screen(){
+  void Game_Screen() { // Game Screen
 
 
-          // Window settings
-          sf::RenderWindow window(sf::VideoMode(1350,1350),"Math Game");
-        
-          // setting window position to the center of the screen
-          window.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width * 0.5 - window.getSize().x * 0.5, sf::VideoMode::getDesktopMode().height * 0.5 - window.getSize().y * 0.5));
+    // Window settings
+    sf::RenderWindow window(sf::VideoMode(1350, 1350), "MATH WIZARDRY");
+
+    // setting window position to the center of the screen
+    window.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width * 0.5 - window.getSize().x * 0.5, sf::VideoMode::getDesktopMode().height * 0.5 - window.getSize().y * 0.5));
 
 
 
+    // GAME PAGE
 
-          int time_counter = 0;
+    srand ( time(NULL) ); // setting seed for random numbers
 
-          if(time_counter == 0){
-           sf::Text countdown;
-          countdown.setFont(font);
-          countdown.setString(to_string(3));
-          countdown.setCharacterSize(60);
-          countdown.setPosition({380,150});
-          countdown.setFillColor(sf::Color::Blue);
-          countdown.setOutlineColor(sf::Color::Cyan);
+    // Go Back button creation
 
-
-          sf::Time Start_Count = sf::seconds(3);
-          sf::Clock clock;
-          sf::Time current_time;
-
-          while(window.isOpen() && int(current_time.asSeconds()) > 0){
-            sf::Time current_time = Start_Count - clock.getElapsedTime();
-
-            countdown.setString(to_string( int(current_time.asSeconds())));
-
-
-          window.clear();
-          window.draw(countdown);
-          window.display();
-            }
-            time_counter++;
-          window.clear();
-          }
+    Textfield Textbox(50, sf::Color::Blue, true);
+    Textbox.setFont(font);
+    Textbox.setPosition({540, 500});
 
 
 
 
 
+    sf::Event gameEvent;
+
+
+
+    // Equation settings
+
+
+
+    Equation.setFont(font);
+    Equation.setFillColor(sf::Color::White);
+    Equation.setOutlineColor(sf::Color::Blue);
+
+
+
+
+    Equation.setFillColor(sf::Color::White);
+    Equation.setOutlineColor(sf::Color::Blue);
+    Equation.setPosition(530, 200);
+    Equation.setOutlineThickness(2);
+    Equation.setCharacterSize(80);
+
+
+
+    // sf::Score settings
+
+    Score.setFont(font);
+    Score.setFillColor(sf::Color::Blue);
+    Score.setOutlineColor(sf::Color::White);
+    Score.setOutlineThickness(2);
+    Score.setCharacterSize(50);
+    Score.setPosition({10, 200});
+
+
+    vector<int> diff_nums = difficulty_numbers.at(difficulty); // getting difficulty numbers
+
+    int user_input;
+    bool correct_case = true;
+    int score_value = 0;
+    Score.setString("SCORE : " + to_string(score_value));
+    char current_operation;
+
+    //dealing with time
+
+    int start_time_counter = 3;
+    sf::Text start_countdown;
+    start_countdown.setFont(font);
+    start_countdown.setString(to_string(3));
+    start_countdown.setCharacterSize(100);
+    start_countdown.setPosition({600, 300});
+    start_countdown.setFillColor(sf::Color::Blue);
+    start_countdown.setOutlineColor(sf::Color::Cyan);
+
+    sf::Time Start_Count = sf::seconds(4);
+    sf::Time Game_Time = sf::seconds(64);
+    sf::Time current_time;
+
+    sf::Text Get_Ready;
+    Get_Ready.setFont(font);
+    Get_Ready.setString("Get Ready !");
+    Get_Ready.setCharacterSize(100);
+    Get_Ready.setPosition({400, 150});
+    Get_Ready.setOutlineThickness(2);
+    Get_Ready.setFillColor(sf::Color::Blue);
+    Get_Ready.setOutlineColor(sf::Color::White);
+
+
+    // 1 MINUTE COUNT DOWN
+
+    int game_time_counter = 64;
+    sf::Text Game_countdown;
+    Game_countdown.setFont(font);
+    Game_countdown.setString("TIME LEFT : " + to_string(3));
+    Game_countdown.setCharacterSize(30);
+    Game_countdown.setPosition({0, 300});
+    Game_countdown.setOutlineThickness(2);
+    Game_countdown.setFillColor(sf::Color::Blue);
+    Game_countdown.setOutlineColor(sf::Color::White);
+
+
+// AFTER GAME
+
+    sf::Text Well_Done;
+    Well_Done.setFont(font);
+    Well_Done.setString("Well Done !");
+    Well_Done.setCharacterSize(80);
+    Well_Done.setPosition({400, 150});
+    Well_Done.setOutlineThickness(2);
+    Well_Done.setFillColor(sf::Color::Blue);
+    Well_Done.setOutlineColor(sf::Color::White);
+
+
+    sf::Text run_Score;
+    run_Score.setFont(font);
+    run_Score.setString("Current Score : " + to_string(score_value));
+    run_Score.setCharacterSize(60);
+    run_Score.setPosition({500, 150});
+    run_Score.setOutlineThickness(2);
+    run_Score.setFillColor(sf::Color::Blue);
+    run_Score.setOutlineColor(sf::Color::White);
+
+
+
+
+    int personal_best_score = 100;  // <<---- LINK HIGHEST SCORE  // IF THERE ISNT YET SET IT TO 0
+
+    sf::Text Personal_Best;
+    Personal_Best.setFont(font);
+    Personal_Best.setString("Personal Best : " + to_string(score_value));
+    Personal_Best.setCharacterSize(60);
+    Personal_Best.setPosition({600, 150});
+    Personal_Best.setOutlineThickness(2);
+    Personal_Best.setFillColor(sf::Color::Blue);
+    Personal_Best.setOutlineColor(sf::Color::White);
+
+
+    Button return_2_menu_button("RETURN TO MAIN MENU", 60, {300, 200}, sf::Color::Cyan, sf::Color::Blue);
+    return_2_menu_button.setFont(font);
+    return_2_menu_button.setPosition({200, 400});
+
+    sf::Text Difficulty_mode;
+    Difficulty_mode.setFont(font);
+    Difficulty_mode.setCharacterSize(60);
+    Difficulty_mode.setPosition({100, 150});
+    Difficulty_mode.setOutlineThickness(2);
+    Difficulty_mode.setFillColor(sf::Color::Blue);
+    Difficulty_mode.setOutlineColor(sf::Color::White);
 
 
 
 
 
-            // GAME PAGE
-
-        srand ( time(NULL) ); // setting seed for random numbers
-        
-        // Go Back button creation
-
-             Textfield Textbox(50, sf::Color::Blue, true);
-              Textbox.setFont(font);
-              Textbox.setPosition({500, 500});
-
-        
-      
-        
-        
-        sf::Event gameEvent;
-          
-
-          // sf::Score settings
-
-            Score.setFont(font);
-            Score.setFillColor(sf::Color::Blue);
-            Score.setOutlineColor(sf::Color::White);
-            Score.setOutlineThickness(2);
-            Score.setCharacterSize(50);
-            Score.setPosition({10,200});
 
 
-            vector<int> diff_nums = difficulty_numbers.at(difficulty); // getting difficulty numbers
-            
-            int user_input;
-            bool correct_case = true;
-            int score_value = 0;
-            Score.setString("Score : " + to_string(score_value));
-            char current_operation;
-             while(window.isOpen()){
+    sf::Clock clock;
+    while(window.isOpen()) {
+
+      while(start_time_counter > 0) { // 3 seconds count down
 
 
 
-            if(correct_case == true){
-             current_operation = operations.at(rand() % 4);
-
-            if(current_operation == '+') {  // setting up problem numbers.
 
 
-              number_1 = (rand() % diff_nums.at(0) + 1);
-              number_2 = (rand() % number_1 + 1);
+        sf::Time current_time = Start_Count - clock.getElapsedTime();
 
+        start_countdown.setString(to_string( int(current_time.asSeconds())));
+        start_time_counter = int(current_time.asSeconds());
 
-              result = number_1 + number_2 ;
-            } else if(current_operation == '-') {
-              number_1 = rand() % diff_nums.at(1) + 1;
-              number_2 = rand() % number_1 + 1;
+        window.clear();
+        window.draw(start_countdown);
+        window.draw(Get_Ready);
+        window.display();
 
-              result = number_1 - number_2;
-            } else if(current_operation == '*') {
-              number_1 = rand() % diff_nums.at(2) + 1;
-              number_2 = rand() % diff_nums.at(2) + 1;
-
-              result = number_1 * number_2;
-            } else if (current_operation == '/') {
-              number_1 = rand() % diff_nums.at(3) + 1;
-              number_2 = rand() % number_1 + 1;
-              while(number_1 % number_2 != 0)
-                number_2 = rand() % number_1 + 2;
-
-              result = number_1 / number_2;
-            }
-            correct_case = false;
-          }
-            Equation.setString(to_string(number_1) + " " + current_operation + " " + to_string(number_2) + " = ");
-
-            window.clear();
-            window.draw(Equation);
-            window.draw(Score);
-            Textbox.LetsDraw(window);
-            window.display();
-           
-       
-
-          std::stringstream(Textbox.getText()) >> user_input;
-             
-
-
-          
-
-            if(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)){
-              
-
-              if(result == user_input){
-
-               score_value++;
-               correct_case = true;
-               Score.setString("Score : " + to_string(score_value));
-               Textbox.resetText();
-
-              }
-            
-             
-
-
-
-            }
-
-
-            while (window.pollEvent(gameEvent)) {
-
-               if(gameEvent.type == sf::Event::TextEntered) {
-
-                Textbox.Read_and_Write_Input(gameEvent);
-              }
-
-
-             if(gameEvent.type == sf::Event::MouseButtonPressed) {
-
-      
-          }
-
-          if(gameEvent.type == sf::Event::Closed){
-             window.close();
-              return;
-          }
-               
 
       }
-          
+      window.clear();
+        while(game_time_counter > 0) {
+
+        if(correct_case == true) {
+          current_operation = operations.at(rand() % 4);
+
+          if(current_operation == '+') {  // setting up problem numbers.
+
+
+            number_1 = (rand() % diff_nums.at(0) + 1);
+            number_2 = (rand() % number_1 + 1);
+
+
+            result = number_1 + number_2 ;
+          } else if(current_operation == '-') {
+            number_1 = rand() % diff_nums.at(1) + 1;
+            number_2 = rand() % number_1 + 1;
+
+            result = number_1 - number_2;
+          } else if(current_operation == '*') {
+            number_1 = rand() % diff_nums.at(2) + 1;
+            number_2 = rand() % diff_nums.at(2) + 1;
+
+            result = number_1 * number_2;
+          } else if (current_operation == '/') {
+            number_1 = rand() % diff_nums.at(3) + 1;
+            number_2 = rand() % number_1 + 1;
+            while(number_1 % number_2 != 0)
+              number_2 = rand() % number_1 + 2;
+
+            result = number_1 / number_2;
+          }
+          correct_case = false;
+        }
+        Equation.setString(to_string(number_1) + " " + current_operation + " " + to_string(number_2) + " = ");
+
+        sf::Time current_time = Game_Time - clock.getElapsedTime();
+
+        Game_countdown.setString("TIME LEFT : " + to_string( int(current_time.asSeconds())) + " SECONDS");
+        game_time_counter = int(current_time.asSeconds());
 
 
 
-              
-              
-             
-
-            
 
 
+        window.clear();
+        window.draw(Equation);
+        window.draw(Score);
+        window.draw(Game_countdown);
+        Textbox.LetsDraw(window);
+        window.display();
 
 
 
-            
-            
+        std::stringstream(Textbox.getText()) >> user_input;
 
-}
+
+
+
+
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
+
+
+          if(result == user_input) {
+
+            score_value++;
+            correct_case = true;
+            Score.setString("Score : " + to_string(score_value));
+            Textbox.resetText();
+
+          }
+
+
+
+
+
+        }
+
+
+        while (window.pollEvent(gameEvent)) {
+
+          if(gameEvent.type == sf::Event::TextEntered) {
+
+            Textbox.Read_and_Write_Input(gameEvent);
+          }
+
+
+          if(gameEvent.type == sf::Event::MouseButtonPressed) {
 
 
           }
 
+          if(gameEvent.type == sf::Event::Closed) {
+            window.close();
+            return;
+          }
+
+
+        }
+
+      }
+  
+
+while(true) {
+        window.clear();
+        run_Score.setString("Current Score : " + to_string(score_value));
+
+        if(score_value > personal_best_score) {
+
+          Well_Done.setString("Personal Record !");
+          Personal_Best.setString("Previous Best Score : " + to_string(personal_best_score));
+        } else {
+
+
+          Well_Done.setString(" Well Done  !");
+          Personal_Best.setString(" Personal  Record : " + to_string(personal_best_score));
+
+        }
+        if(difficulty == 1) {
+          Difficulty_mode.setString("Muggles Mode");
+          Difficulty_mode.setFillColor(sf::Color::Green);
+          Difficulty_mode.setOutlineColor(sf::Color::White);
+
+
+        } else if(difficulty == 2) {
+
+          Difficulty_mode.setString("Baby Wizard Mode");
+          Difficulty_mode.setFillColor(sf::Color::Blue);
+          Difficulty_mode.setOutlineColor(sf::Color::White);
+
+
+        } else {
+          Difficulty_mode.setString("Master Wizard Mode");
+          Difficulty_mode.setFillColor(sf::Color::Red);
+          Difficulty_mode.setOutlineColor(sf::Color::White);
+
+        }
+
+
+
+
+        window.clear();
+        window.draw(run_Score);
+        window.draw(Well_Done);
+        window.draw(Personal_Best);
+        window.draw(Difficulty_mode);
+        return_2_menu_button.LetsDraw(window);
+
+
+
+        while (window.pollEvent(gameEvent)) {
+
+
+
+          if(gameEvent.type == sf::Event::MouseButtonPressed) {
+            if(return_2_menu_button.isMouseHover(window)) {
+              First_Screen();
+              return;
+            }
+          }
+          if(gameEvent.type == sf::Event::Closed) {
+            window.close();
+            return;
+          }
+
+        }
+      }
+
+
+
+
+
+
+
+
+  }
+
+  
+}
 
 
 
@@ -717,13 +861,12 @@ font.loadFromFile("/usr/share/fonts/truetype/ubuntu/Ubuntu-BI.ttf");
 int main() {
 
 
-  Mental_Math Mental_Math_Game;
+    Mental_Math Mental_Math_Game;
 
-  Mental_Math_Game.First_Screen();
+    Mental_Math_Game.First_Screen();
 
 
-
-}
+    } 
 
 
 
