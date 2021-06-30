@@ -296,7 +296,7 @@ class Mental_Math {
           }
           if(go_back_button.isMouseHover(window)){
 
-            // Victoria 
+            playgame();
 
 
           }
