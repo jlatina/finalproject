@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <ctime>
 #include <string>
@@ -233,7 +232,7 @@ class Mental_Math {
     window.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width * 0.5 - window.getSize().x * 0.5, sf::VideoMode::getDesktopMode().height * 0.5 - window.getSize().y * 0.5));
 
 
-    if(!texture.loadFromFile("/home/ece-student/Desktop/inclass/icecave.png")) {
+    if(!texture.loadFromFile("/home/ece-student/Desktop/inclass/paper1.jpg")) {
 
       std::cout << "Load Failed" << "\n";
 
@@ -246,6 +245,7 @@ class Mental_Math {
 
 
     text_diff.setFont(font);
+    text_diff.setOutlineThickness(2);
     text_diff.setOutlineColor(sf::Color::Black);
     text_diff.setFillColor(sf::Color::Blue);
 
@@ -256,16 +256,16 @@ class Mental_Math {
 
     Button easy_button("Muggles", 50, {400, 100}, sf::Color::Cyan, sf::Color::Blue);
     easy_button.setFont(font);
-    easy_button.setPosition({600, 250});
+    easy_button.setPosition({540, 250});
 
 
     Button medium_button("Baby Wizard", 50, {400, 100}, sf::Color::Cyan, sf::Color::Blue);
     medium_button.setFont(font);
-    medium_button.setPosition({600, 450});
+    medium_button.setPosition({540, 450});
 
     Button hard_button("Master Wizard", 50, {400, 100}, sf::Color::Cyan, sf::Color::Blue);
     hard_button.setFont(font);
-    hard_button.setPosition({600, 650});
+    hard_button.setPosition({540, 650});
 
 
     Button go_back_button("GO BACK", 50, {250, 100}, sf::Color::Cyan, sf::Color::Blue);
@@ -289,8 +289,14 @@ class Mental_Math {
 
           if(easy_button.isMouseHover(window) or medium_button.isMouseHover(window) or hard_button.isMouseHover(window)) {
             window.close();
-            Start_Screen();
+            Game_Screen();
             return;
+
+
+          }
+          if(go_back_button.isMouseHover(window)){
+
+            // Victoria 
 
 
           }
@@ -338,81 +344,7 @@ class Mental_Math {
 
 
   }
-  void Start_Screen() {
-
-    sf::RenderWindow window(sf::VideoMode(1350, 1350), "Math Wizardry");
-
-    // setting window position to the center of the screen
-    window.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width * 0.5 - window.getSize().x * 0.5, sf::VideoMode::getDesktopMode().height * 0.5 - window.getSize().y * 0.5));
-
-
-    sf::Text GameTitle;
-    GameTitle.setFont(font);
-    GameTitle.setString("|  MATH WIZARDRY |");
-    GameTitle.setCharacterSize(60);
-    GameTitle.setPosition({380, 150});
-    GameTitle.setFillColor(sf::Color::Blue);
-    GameTitle.setOutlineColor(sf::Color::Cyan);
-
-
-    Button start_button("START", 60, {300, 200}, sf::Color::Cyan, sf::Color::Blue);
-    start_button.setFont(font);
-    start_button.setPosition({500, 400});
-
-    Button go_back_button("GO BACK", 50, {250, 100}, sf::Color::Cyan, sf::Color::Blue);
-    go_back_button.setFont(font);
-    go_back_button.setPosition({0, 0});
-    sf::Event gameEvent;
-
-
-    while(window.isOpen()) {
-
-    while (window.pollEvent(gameEvent)) {
-
-        if(gameEvent.type == sf::Event::MouseButtonPressed) {
-
-          if(go_back_button.isMouseHover(window)) {
-            window.close();
-            First_Screen(); // going back to the previous page
-            return;
-          }
-          if(start_button.isMouseHover(window)) {
-            window.close();
-            Game_Screen(); // starting the game
-            return;
-
-          }
-
-        }
-
-        if(gameEvent.type == sf::Event::Closed) {
-          window.close();
-          return;
-        }
-
-
-      }
-
-      if(go_back_button.isMouseHover(window))
-        go_back_button.setBackgColor(sf::Color::White);
-      else
-        go_back_button.setBackgColor(sf::Color::Blue);
-      if(start_button.isMouseHover(window))
-        start_button.setBackgColor(sf::Color::White);
-      else
-        start_button.setBackgColor(sf::Color::Blue);
-
-     
-      window.clear();
-      window.draw(GameTitle);
-      go_back_button.LetsDraw(window);
-      start_button.LetsDraw(window);
-      window.display();
-
-    }
-
-
-  }
+  
 
 
   void Game_Screen() {
@@ -424,6 +356,19 @@ class Mental_Math {
     // setting window position to the center of the screen
     window.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width * 0.5 - window.getSize().x * 0.5, sf::VideoMode::getDesktopMode().height * 0.5 - window.getSize().y * 0.5));
 
+    if(!texture.loadFromFile("/home/ece-student/Desktop/inclass/paper1.jpg")) {
+
+      std::cout << "Load Failed" << "\n";
+
+    }
+
+    sf::Sprite sprite;
+    sprite.setTexture(texture);
+
+
+
+
+
    // setting seed for random numbers
 
    srand (time(NULL)); 
@@ -432,7 +377,7 @@ class Mental_Math {
 
     // Textbox creation for user input
 
-    Textfield Textbox(50, sf::Color::Blue, true);
+    Textfield Textbox(50, sf::Color::White, true);
     Textbox.setFont(font);
     Textbox.setPosition({540, 500});
 
@@ -565,6 +510,7 @@ class Mental_Math {
 
 
         window.clear();
+        window.draw(sprite);
         window.draw(Equation);
         window.draw(Score);
         window.draw(Game_countdown);
@@ -628,6 +574,21 @@ class Mental_Math {
 
     // setting window position to the center of the screen
     window.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width * 0.5 - window.getSize().x * 0.5, sf::VideoMode::getDesktopMode().height * 0.5 - window.getSize().y * 0.5));
+
+
+    if(!texture.loadFromFile("/home/ece-student/Desktop/inclass/paper3.png")) {
+
+      std::cout << "Load Failed" << "\n";
+
+    }
+
+    sf::Sprite sprite;
+    sprite.setTexture(texture);
+
+
+
+
+
 
     sf::Event gameEvent;
 
@@ -698,6 +659,7 @@ class Mental_Math {
 
 
       window.clear();
+      window.draw(sprite);
       window.draw(Difficulty_mode);
       window.draw(Personal_Best);
       window.draw(run_Score);
@@ -739,6 +701,3 @@ int main() {
 
 
 }
-
-
-
