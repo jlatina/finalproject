@@ -20,15 +20,17 @@ public:
            new_username,
            new_password,
            line, line2, line3,
-           strings, strings2, strings3;
+           strings, strings2, strings3,
+           returnuser;
 
     bool exists;
+    bool display;
 
     int count = 0, count2 = 0;
 
     ofstream append_to_file;
 
-    void login(ifstream *ifs){
+    string login(ifstream *ifs){
 
         // (*ifs).open("accountinfo.txt");
         cout << "Enter username: ";
@@ -69,13 +71,17 @@ public:
 
             if (exists == true) {
                 cout << "Successfully logged in" << "\n";
+                returnuser = attempted_username;
+                display = true;
             } else {
                 cout << "Incorrect password" << "\n";
+                display = false;
             }
         }
         else
             cout << "Username doesn't exist in database" << "\n";
 
+    return returnuser;
     }
 
     void account_register(ifstream *ifs){
@@ -108,28 +114,28 @@ public:
 };
 
 
-int main() {
+// int main() {
 
-    account_manager account;
-    ifstream ifs;
+//     account_manager account;
+    // ifstream ifs;
 
-    ifs.open("accountinfo.txt");
+    // ifs.open("accountinfo.txt");
 
-    if (!ifs) {
-        ofstream create_file("accountinfo.txt");
-        ifs.open("accountinfo.txt");
-    }
+    // if (!ifs) {
+    //     ofstream create_file("accountinfo.txt");
+    //     ifs.open("accountinfo.txt");
+    // }
 
 
-    // if user clicks sign up button:
+//     // if user clicks sign up button:
 
-    account.account_register(&ifs);
+//     // account.account_register(&ifs);
 
-    // if user clicks login button:
+//     // if user clicks login button:
 
-    // account.login(&ifs);
+//     account.login(&ifs);
 
-    ifs.close();
+//     ifs.close();
 
-    return 0;
-}
+//     return 0;
+// }
