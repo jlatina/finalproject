@@ -1,6 +1,8 @@
 // Copyright Victoria Carlsten
 
 
+// Copyright Victoria Carlsten carlsten@bu.edu
+
 #include <chrono>
 #include <ctime>
 #include <iostream>
@@ -178,9 +180,9 @@ class interface {
         double dx3 = location3.x - event.mouseButton.x;
         double dy3 = location3.y - event.mouseButton.y;
 
-        if (dx3 < 50 && dy3 < 50) {
+        if (dx3 <  && dy3 < ) {
           std::cout << "Login button pressed" << "\n";
-          // std::cout << "dx: " << dx << "dy: " << dy << "\n";
+          std::cout << "dx: " << dx << "dy: " << dy << "\n";
           // loginfunc();
           break;
         }
@@ -255,11 +257,11 @@ void playgame() {
     sf::Font font;
     font.loadFromFile("/usr/share/fonts/truetype/ubuntu/Ubuntu-BI.ttf");
     choose.setFont(font);
-    choose.setString("Please Choose a Game");
+    choose.setString("Are you ready to become a Math Wizard?");
     choose.setFillColor(sf::Color::White);
     // choose.setOutlineColor(sf::Color::Red);
     choose.setOutlineThickness(2);
-    choose.setPosition(450, 80);
+    choose.setPosition(280, 80);
     choose.setCharacterSize(40);
     choose.setStyle(sf::Text::Style::Bold | sf::Text::Style::Underlined);
 
@@ -374,4 +376,3 @@ int main() {
   }
   return 0;
 }
-
