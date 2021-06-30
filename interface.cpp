@@ -1,8 +1,5 @@
 // Copyright Victoria Carlsten
 
-
-// Copyright Victoria Carlsten carlsten@bu.edu
-
 #include <chrono>
 #include <ctime>
 #include <iostream>
@@ -26,10 +23,12 @@ sf::Text back;
 sf::Text login;
 sf::Text choose;
 sf::Text option;
+sf::Text logintext;
+sf::Text signup;
 // sf::Music music;
 
 void playgame();
-// void loginfunc();
+void loginfunc();
 
 class interface {
  public:
@@ -50,12 +49,12 @@ class interface {
 
 // Create background image
     sf::Image box_background;
-    box_background.loadFromFile("background.png");
+    box_background.loadFromFile("galaxy.png");
     sf::Texture texture_background;
     texture_background.loadFromImage(box_background);
     sf::Sprite sprite_background;
     sprite_background.setTexture(texture_background);
-    sprite_background.scale(sf::Vector2f(1.5, 1.4)); //1st wider 2nd higher
+    sprite_background.scale(sf::Vector2f(1.6, 1.5)); //1st wider 2nd higher
     sprite_background.setPosition(1, 1);
 
 // create the first rectangle
@@ -180,10 +179,10 @@ class interface {
         double dx3 = location3.x - event.mouseButton.x;
         double dy3 = location3.y - event.mouseButton.y;
 
-        if (dx3 <  && dy3 < ) {
+        if (dx3 < 200 && dy3 < 170) {
           std::cout << "Login button pressed" << "\n";
-          std::cout << "dx: " << dx << "dy: " << dy << "\n";
-          // loginfunc();
+          // std::cout << "dx: " << dx << "dy: " << dy << "\n";
+          loginfunc();
           break;
         }
 
@@ -245,12 +244,12 @@ void playgame() {
 
 // Background
     sf::Image box_gbackground;
-    box_gbackground.loadFromFile("gamebackground.PNG");
+    box_gbackground.loadFromFile("magic.png");
     sf::Texture texture_gbackground;
     texture_gbackground.loadFromImage(box_gbackground);
     sf::Sprite sprite_gbackground;
     sprite_gbackground.setTexture(texture_gbackground);
-    sprite_gbackground.scale(sf::Vector2f(1.5, 1.4)); //1st wider 2nd higher
+    sprite_gbackground.scale(sf::Vector2f(1.4, 1.3)); //1st wider 2nd higher
     sprite_gbackground.setPosition(1, 1);
 
 // "Please Choose a Game" text
@@ -264,28 +263,6 @@ void playgame() {
     choose.setPosition(280, 80);
     choose.setCharacterSize(40);
     choose.setStyle(sf::Text::Style::Bold | sf::Text::Style::Underlined);
-
-// Frame for Gordon
-    sf::RectangleShape gordon_rec(sf::Vector2f(30, 4));
-    gordon_rec.setFillColor(sf::Color::White);
-    gordon_rec.setPosition(710, 280);
-    gordon_rec.setSize(sf::Vector2f(400, 250));
-
-// Filler frame for Gordon
-    sf::RectangleShape gordon_rec1(sf::Vector2f(30, 4));
-    gordon_rec1.setFillColor(sf::Color::Black);
-    gordon_rec1.setPosition(724, 290);
-    gordon_rec1.setSize(sf::Vector2f(370, 230));
-
-// Gordon picture
-    sf::Image box;
-    box.loadFromFile("gordon.png");
-    sf::Texture texture;
-    texture.loadFromImage(box);
-    sf::Sprite sprite;
-    sprite.setTexture(texture);
-    sprite.scale(sf::Vector2f(0.6, 0.7)); //1st wider 2nd higher
-    sprite.setPosition(750, 300);
 
 // Frame for math picture
     sf::RectangleShape math(sf::Vector2f(30, 4));
@@ -322,11 +299,8 @@ void playgame() {
     window.draw(sprite_gbackground);
     window.draw(choose);
     window.draw(back);
-    window.draw(gordon_rec);
-    window.draw(gordon_rec1);
     window.draw(math);
     window.draw(math1);
-    window.draw(sprite);
     window.draw(sprite1);
     window.display();
   }
@@ -338,17 +312,59 @@ void loginfunc() { // Option to log-in or sign-up
   interface interace;
   while (window.isOpen()) {
 
+     eventfunc();
+      sf::Font font;
       sf::Image box_gbackground;
-    box_gbackground.loadFromFile("gamebackground.PNG");
+    box_gbackground.loadFromFile("magic.png");
     sf::Texture texture_gbackground;
     texture_gbackground.loadFromImage(box_gbackground);
     sf::Sprite sprite_gbackground;
     sprite_gbackground.setTexture(texture_gbackground);
-    sprite_gbackground.scale(sf::Vector2f(1.5, 1.4)); //1st wider 2nd higher
+    sprite_gbackground.scale(sf::Vector2f(1.4, 1.3)); //1st wider 2nd higher
     sprite_gbackground.setPosition(1, 1);
+
+    // Option to go back. Pressing this should lead back to main screen
+    font.loadFromFile("/usr/share/fonts/truetype/ubuntu/Ubuntu-BI.ttf");
+    back.setFont(font);
+    back.setString("Go Back");
+    back.setFillColor(sf::Color::White);
+    back.setPosition(60, 40);
+    back.setCharacterSize(28);
+
+    // Rectangle for login text
+    sf::RectangleShape first(sf::Vector2f(30, 4));
+    first.setFillColor(sf::Color::Blue);
+    first.setPosition(430, 275);
+    first.setSize(sf::Vector2f(450, 80));
+
+    // Text login
+    logintext.setFont(font);
+    logintext.setString("Log In");
+    logintext.setFillColor(sf::Color::White);
+    logintext.setPosition(570, 270);
+    logintext.setCharacterSize(60);
+
+    // Rectangle for signup text
+    sf::RectangleShape first2(sf::Vector2f(30, 4));
+    first2.setFillColor(sf::Color::Blue);
+    first2.setPosition(430, 370);
+    first2.setSize(sf::Vector2f(450, 80));
+
+    // Text signup
+    signup.setFont(font);
+    signup.setString("Sign-up");
+    signup.setFillColor(sf::Color::White);
+    signup.setPosition(550, 370);
+    signup.setCharacterSize(60);
 
     window.clear();
     window.draw(sprite_gbackground);
+    window.draw(back);
+    window.draw(first);
+    window.draw(logintext);
+    window.draw(first2);
+    window.draw(signup);
+    window.display();
   }
 }
 
