@@ -18,7 +18,6 @@ double accuratetime() {
 
 sf::RenderWindow window(sf::VideoMode(1350, 1350), "Work your Brain!", sf::Style::Close);
 sf::Text word_pg;
-// sf::Text word_la;
 sf::Text username;
 sf::Text clocktext;
 sf::Text back;
@@ -28,6 +27,7 @@ sf::Text option;
 // sf::Music music;
 
 void playgame();
+// void loginfunc();
 
 class interface {
  public:
@@ -48,7 +48,6 @@ class interface {
 
 // Create background image
     sf::Image box_background;
-    box_background.create(10, 10, sf::Color::Yellow);
     box_background.loadFromFile("background.png");
     sf::Texture texture_background;
     texture_background.loadFromImage(box_background);
@@ -80,16 +79,9 @@ class interface {
     word_pg.setPosition(430, 300);
     word_pg.setCharacterSize(100);
 
-// create "Language"
-    // word_la.setFont(font);
-    // word_la.setString("Language Options");
-    // word_la.setFillColor(sf::Color::White);
-    // word_la.setPosition(1000, 80);
-    // word_la.setStyle(sf::Text::Style::Bold | sf::Text::Style::Underlined);
-
 // Create "Username"
     username.setFont(font);
-    username.setString("Username");
+    username.setString("Not Logged In");
     username.setFillColor(sf::Color::White);
     username.setPosition(1090, 80);
     username.setStyle(sf::Text::Style::Bold | sf::Text::Style::Underlined);
@@ -158,6 +150,13 @@ class interface {
     bool click;
 
     while (window.pollEvent(event)) {
+
+      if (event.type == sf::Event::Closed)
+        window.close();
+
+      if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Escape))
+        window.close();
+
       if (event.type == sf::Event::MouseButtonPressed) {
 
         auto location = word_pg.getPosition();
@@ -175,19 +174,13 @@ class interface {
         double dx2 = location2.x - event.mouseButton.x;
         double dy2 = location2.y - event.mouseButton.y;
 
-
-        // if (dx2 < 35 && dy2 < 35) {
-        //   std::cout << "Back button pressed" << "\n";
-        //   windowfunc();
-        //   break;
-        // }
-
         auto location3 = login.getPosition();
         double dx3 = location3.x - event.mouseButton.x;
         double dy3 = location3.y - event.mouseButton.y;
 
-        if (dx2 < 35 && dy2 < 35) {
+        if (dx3 < 50 && dy3 < 50) {
           std::cout << "Login button pressed" << "\n";
+          // std::cout << "dx: " << dx << "dy: " << dy << "\n";
           // loginfunc();
           break;
         }
@@ -232,10 +225,7 @@ void eventfunc() {
           interface.windowfunc();
           eventfunc();
         }
-        // }
-        // window.clear();
-        // windowfunc();
-        // break;
+      
       }
 
     }
@@ -246,14 +236,13 @@ void playgame() {
 
   interface interace;
   while (window.isOpen()) {
-// should show game options
+// show game options
 
 
     eventfunc();
 
 // Background
     sf::Image box_gbackground;
-    box_gbackground.create(10, 10, sf::Color::Yellow);
     box_gbackground.loadFromFile("gamebackground.PNG");
     sf::Texture texture_gbackground;
     texture_gbackground.loadFromImage(box_gbackground);
@@ -288,7 +277,6 @@ void playgame() {
 
 // Gordon picture
     sf::Image box;
-    box.create(10, 10, sf::Color::Yellow);
     box.loadFromFile("gordon.png");
     sf::Texture texture;
     texture.loadFromImage(box);
@@ -311,7 +299,6 @@ void playgame() {
 
 // Math picture
     sf::Image box1;
-    box1.create(10, 10, sf::Color::Yellow);
     box1.loadFromFile("brain.png");
     sf::Texture texture1;
     texture1.loadFromImage(box1);
@@ -340,11 +327,29 @@ void playgame() {
     window.draw(sprite);
     window.draw(sprite1);
     window.display();
-    // backfunc();
-
   }
 
 }
+
+void loginfunc() { // Option to log-in or sign-up
+
+  interface interace;
+  while (window.isOpen()) {
+
+      sf::Image box_gbackground;
+    box_gbackground.loadFromFile("gamebackground.PNG");
+    sf::Texture texture_gbackground;
+    texture_gbackground.loadFromImage(box_gbackground);
+    sf::Sprite sprite_gbackground;
+    sprite_gbackground.setTexture(texture_gbackground);
+    sprite_gbackground.scale(sf::Vector2f(1.5, 1.4)); //1st wider 2nd higher
+    sprite_gbackground.setPosition(1, 1);
+
+    window.clear();
+    window.draw(sprite_gbackground);
+  }
+}
+
 
 int main() {
 
@@ -369,3 +374,4 @@ int main() {
   }
   return 0;
 }
+
