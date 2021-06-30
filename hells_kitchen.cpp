@@ -12,96 +12,86 @@
 
 using namespace std;
 
+class Level{ //stuff
+
+vector <int> difficulty = {3, 8, 11};
+};
 
 int main() {
     vector<string> food = {"burgers", "lobsters", "clams", "chicken alfredo", "french fries", "mac n cheese", "chicken nuggets",
                            "shrimp risotto", "pepperioni pizza", "oysters", "tacos", "dumplings", "ribs", "churros", "icecream", "chocolate cake"
                           };
  
-    srand(time(NULL));
     int ordernum,index; 
     vector<string>orders;
-    
-    bool correct = false, is_level1 = false, is_level2 = false, is_level3 = false;
+    int answer;
+    int count =0;
 
+
+    bool correct = false, is_level1 = false;
     map <string, int> level1;
     map <string, int> level2;
-    map <string, int> level3;				
+    map <string, int> level3;
 
+Level levels;
+cout << "Let's get Cooking!" << "\n";
 
-vector <int> level1index;
+// for loop based on the level difficulty, so when they do better then # of order items change  
 
-
-// Level 1:  3 different items
-
-cout << "**LEVEL 1**" << "\n";
+    srand(time(NULL));
     for (int i = 0; i < 3; i ++) {
-        index = rand()%(food.size()-1) + 1;
-        ordernum = rand() % 10 + 1;				
+      // random string from vector 
+        index = rand()%(food.size()-1) + 1; 
+        ordernum = rand() % 10 + 1;		// random number for amount of orders
+        cout << food.at(index) << ": " << ordernum << "\n";
+        level1.insert({food.at(index), ordernum});
+				index = 0;
+    }
+ for (auto e: level1) {
+            cout << "How many " << e.first << ": ";
+            cin >> answer;
+            //error checking
+            if(answer == e.second) {
+            correct = true;
+            count ++;
+        }
+        if (count == 3){
+        cout << "well done chef!";
+        cout<< "Level Up!";
+        
+    for (int i = 0; i < 8; i ++) {
+      // random string from vector 
+        index = rand()%(food.size()-1) + 1; 
+        ordernum = rand() % 10 + 1;		// random number for amount of orders
         cout << food.at(index) << ": " << ordernum << "\n";
         level1.insert({food.at(index), ordernum});
 				index = 0;
     }
 
-cout << "**LEVEL 2**" << "\n";
-// Level 2: 5 different items
-    for (int i = 0; i < 5; i ++) {
-        ordernum = rand() % 10 + 1;	
-        index = rand()%(food.size()-1) + 1;
-        cout << food.at(index) << ": " << ordernum << "\n";
-        level2.insert({food.at(index), ordernum});
-    }
-
-cout << "**LEVEL 3**" << "\n";
-// Level 3: 8 diffrent items
-    for (int i = 0; i < 8; i ++) {
-        ordernum = rand() % 10 + 1;	
-        index = rand()%(food.size()-1) + 1;
-        cout << food.at(index) << ": " << ordernum << "\n";
-        level3.insert({food.at(index), ordernum});
-    }
-
-
-// asking the user :
-    int answer1, answer2, answer3;
-
-  
-        for (auto e : level1) {
+    for (auto e: level2) {
             cout << "How many " << e.first << ": ";
-            cin >> answer1;
-        }
-  
-
-        for (int i = 0; i < 5; i ++) {
-            cout << "How many " << food.at(index) << ": ";
-            cin >> answer2;
-        }
-    
-
-        for (int i = 0; i < 8; i ++) {
-            cout << "How many " << food.at(index) << ": ";
-            cin >> answer3;
-        }
-    
-
-// error checking for answer
-    for (auto e : level1) {
-        if(answer1 == e.second) {
+            cin >> answer;
+            //error checking
+            if(answer == e.second) {
             correct = true;
-            cout << "well done";
+            count ++;
         }
+        if (count == 8)
+        cout << "well done chef!";
+        }
+        }
+    if (count > 8){
+    for (int i = 0; i < 11; i ++) {
+      // random string from vector 
+        index = rand()%(food.size()-1) + 1; 
+        ordernum = rand() % 10 + 1;		// random number for amount of orders
+        cout << food.at(index) << ": " << ordernum << "\n";
+        level1.insert({food.at(index), ordernum});
+				index = 0;
+    }
+    }
 
-        for (auto e : level2) {
-            if(answer2 == e.second) {
-                correct = true;
-                cout << "excellent, chef!";
-            }
-            for (auto e : level3) {
-                if(answer3 == e.second) {
-                    correct = true;
-                    cout << "that's more like it ;
-                }
-            }
-        }
-		}
+// asking the user 
+return 0;
+
 }
