@@ -185,7 +185,6 @@ class interface {
         double dy = location.y - event.mouseButton.y;
 
         if (dx < 50 && dy < 50) {
-          std::cout << "Play button pressed" << "\n";
           click = true;
           playgame();
           break;
@@ -200,7 +199,6 @@ class interface {
         double dy3 = location3.y - event.mouseButton.y;
 
         if (dx3 < 200 && dy3 < 170) {
-          std::cout << "Login button pressed" << "\n";
           loginfunc();
           break;
         }
@@ -486,7 +484,6 @@ class Mental_Math {
             difficulty = 2;
 
           if(easy_button.isMouseHover(window) or medium_button.isMouseHover(window) or hard_button.isMouseHover(window)) {
-            // window.close();
             Game_Screen();
             return;
 
@@ -769,12 +766,6 @@ class Mental_Math {
 
   void Final_Screen(int score_value, int difficulty) {
 
-    if(!texture.loadFromFile("External Files/paper3.png")) {
-
-      std::cout << "Load Failed" << "\n";
-
-    }
-
     sf::Sprite sprite;
     sprite.setTexture(texture);
 
@@ -940,11 +931,9 @@ void eventfunc() { // Close window + Back Button
     if (event.type == sf::Event::MouseButtonPressed) {
       dx2 = location2.x - event.mouseButton.x;
       dy2 = location2.y - event.mouseButton.y;
-      std::cout << "dx2: " << dx2 << " dy2: " << dy2 << "\n";
 
 
       if (dx2 > -200 && dy2 > -50) {
-        std::cout << "Back button pressed" << "\n";
 
         while(window.isOpen()) {
           interface.windowfunc(window);
@@ -1038,7 +1027,6 @@ void playgame() { // Ready to play game text
         dy2 = location2.y - event.mouseButton.y;
 
         if (dx2 > -200 && dy2 > -50) {
-          std::cout << "Back button pressed" << "\n";
 
           while(window.isOpen()) {
             interface.windowfunc(window);
@@ -1098,8 +1086,6 @@ void loginfunc() { // Option to log-in or sign-up
         dx2 = location2.x - event.mouseButton.x;
         dy2 = location2.y - event.mouseButton.y;
 
-        std::cout << "dx2: " << dy2 << " dy2: " << dy2 << "\n";
-
         // login button press event
 
 
@@ -1143,7 +1129,6 @@ void loginfunc() { // Option to log-in or sign-up
 
 
         if (dx2 > -200 && dy2 > -50) {
-          std::cout << "Back button pressed" << "\n";
 
           while(window.isOpen()) {
             interface.windowfunc(window);
