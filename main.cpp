@@ -405,7 +405,7 @@ class Textfield {
 class Mental_Math {
 
  public:
-  int counter{0}, number_1, number_2, result, difficulty, random_op_number;;
+  intnumber_1, number_2, result, difficulty, random_op_number;
   string player_answer;
   char current_operation;
   vector<int> easy {100, 100, 10, 100};
@@ -626,7 +626,7 @@ class Mental_Math {
     start_countdown.setOutlineColor(sf::Color::Cyan);
 
     sf::Time Start_Count = sf::seconds(4); // +1 seconds for delay
-    sf::Time Game_Time = sf::seconds(64);
+    sf::Time Game_Time = sf::seconds(64); // +4 seconds for  starting and delay
     sf::Time current_time;
 
 
@@ -642,7 +642,7 @@ class Mental_Math {
 
     // 1 minute countdown settings
 
-    int game_time_counter = 64; // +4 seconds for  starting and delay
+    int game_time_counter = 64; 
     sf::Text Game_countdown;
     Game_countdown.setFont(font);
     Game_countdown.setString("TIME LEFT : " + to_string(3));
