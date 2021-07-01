@@ -61,10 +61,10 @@ $/Desktop game
 For issues dealing with SFML implementation visit (https://www.sfml-dev.org/tutorials/2.5/).
 
 ## Authors
-Victoria Carlsten: Interface Lead
+Interface Lead: Victoria Carlsten
 
-Ahmet Caliskan: Specification Lead
+Specification Lead: Ahmet Caliskan
 
-Jonathan Mikalov: Technical Lead
+Technical Lead: Jonathan Mikalov
 
-Jeanette Villanueva: Project Lead
+Project Lead: Jeanette Villanueva
