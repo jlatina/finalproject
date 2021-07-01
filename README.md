@@ -53,7 +53,7 @@ sf::RenderWindow window(sf::VideoMode(200, 200), "Rectangle");
  
 ```c++
 $ cd /Desktop
-$/Desktop g++ main.cpp -o game
+$/Desktop g++ main.cpp -o game -lsfml-window -lsfml-graphics -lsfml-system
 $/Desktop game
 ```
 
