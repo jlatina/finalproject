@@ -62,6 +62,9 @@ For issues dealing with SFML implementation visit (https://www.sfml-dev.org/tuto
 
 ## Authors
 Victoria Carlsten
+
 Ahmet Caliskan
+
 Jonathan Mikalov 
+
 Jeanette Villanueva
