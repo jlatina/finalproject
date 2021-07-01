@@ -9,7 +9,7 @@ A series of windows created by SMFL are joined together with the use of sf::Even
 
 Background images served to bring asethetic to the application itself by mainting the galaxy and magical theme of the app. 
 
-The Math Wizardy Game consists of three levels that increase in difficulty: Level 1 *muggle* (no magic skills at all) Level 2 *baby wizard* (wizard in training) and Level 3 *master wizard* (all wizard powers). During each level there is a constant 60 second countdown when every equation is displayed. This pushes the user to have not only a quicker response, but to generate their correcet answer faster. 
+The Math Wizardry Game consists of three levels that increase in difficulty: Level 1 *muggle* (no magic skills at all) Level 2 *baby wizard* (wizard in training) and Level 3 *master wizard* (all wizard powers). During each level there is a constant 60 second countdown when every equation is displayed. This pushes the user to have not only a quicker response, but to generate their correcet answer faster. 
 
 
 ## Installation
