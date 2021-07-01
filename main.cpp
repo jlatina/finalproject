@@ -71,7 +71,7 @@ class interface {
 
 // Create background image
     sf::Image box_background;
-    box_background.loadFromFile("galaxy.png");
+    box_background.loadFromFile("External Files/galaxy.png");
     sf::Texture texture_background;
     texture_background.loadFromImage(box_background);
     sf::Sprite sprite_background;
@@ -93,7 +93,7 @@ class interface {
 
 // create "Play Game"
     sf::Font font;
-    font.loadFromFile("/usr/share/fonts/truetype/ubuntu/Ubuntu-BI.ttf");
+    font.loadFromFile("External Files/Ubuntu-BI.ttf");
     word_pg.setFont(font);
     word_pg.setString("Play Game");
     word_pg.setFillColor(sf::Color::White);
@@ -123,7 +123,7 @@ class interface {
 
 
 // Create login/sign -up text
-    font.loadFromFile("/usr/share/fonts/truetype/ubuntu/Ubuntu-BI.ttf");
+    font.loadFromFile("External Files/Ubuntu-BI.ttf");
     login.setFont(font);
     login.setString("Log in/Sign up");
     login.setFillColor(sf::Color::White);
@@ -422,7 +422,7 @@ class Mental_Math {
 
   void First_Screen() {
 
-    if(!texture.loadFromFile("/home/ece-student/Desktop/inclass/paper1.jpg")) {
+    if(!texture.loadFromFile("External Files/paper1.jpg")) {
 
       std::cout << "Load Failed" << "\n";
 
@@ -431,7 +431,7 @@ class Mental_Math {
     sf::Sprite sprite;
     sprite.setTexture(texture);
 
-    font.loadFromFile("/usr/share/fonts/truetype/ubuntu/Ubuntu-BI.ttf");
+    font.loadFromFile("External Files/Ubuntu-BI.ttf");
 
 
     text_diff.setFont(font);
@@ -548,7 +548,7 @@ class Mental_Math {
 
     sf::Event gameEvent;
 
-    if(!texture.loadFromFile("/home/ece-student/Desktop/inclass/paper1.jpg")) {
+    if(!texture.loadFromFile("External Files/paper1.jpg")) {
 
       std::cout << "Load Failed" << "\n";
 
@@ -761,7 +761,7 @@ class Mental_Math {
 
   void Final_Screen(int score_value, int difficulty) {
 
-    if(!texture.loadFromFile("/home/ece-student/Desktop/inclass/paper3.png")) {
+    if(!texture.loadFromFile("External Files/paper3.png")) {
 
       std::cout << "Load Failed" << "\n";
 
@@ -959,7 +959,7 @@ void playgame() { // Ready to play game text
 
 // Background
     sf::Image box_gbackground;
-    box_gbackground.loadFromFile("magic.png");
+    box_gbackground.loadFromFile("External Files/magic.png");
     sf::Texture texture_gbackground;
     texture_gbackground.loadFromImage(box_gbackground);
     sf::Sprite sprite_gbackground;
@@ -969,7 +969,7 @@ void playgame() { // Ready to play game text
 
 // "Are you ready to become a Math Wizard?" text
     sf::Font font;
-    font.loadFromFile("/usr/share/fonts/truetype/ubuntu/Ubuntu-BI.ttf");
+    font.loadFromFile("External Files/Ubuntu-BI.ttf");
     choose.setFont(font);
     choose.setString("Are you ready to become a Math Wizard?");
     choose.setFillColor(sf::Color::White);
@@ -993,7 +993,7 @@ void playgame() { // Ready to play game text
 
 
 // Option to go back. Pressing this should lead back to main screen
-    font.loadFromFile("/usr/share/fonts/truetype/ubuntu/Ubuntu-BI.ttf");
+    font.loadFromFile("External Files/Ubuntu-BI.ttf");
     back.setFont(font);
     back.setString("Go Back");
     back.setFillColor(sf::Color::White);
@@ -1148,7 +1148,7 @@ void loginfunc() { // Option to log-in or sign-up
     }
     sf::Font font;
     sf::Image box_gbackground;
-    box_gbackground.loadFromFile("magic.png");
+    box_gbackground.loadFromFile("External Files/magic.png");
     sf::Texture texture_gbackground;
     texture_gbackground.loadFromImage(box_gbackground);
     sf::Sprite sprite_gbackground;
@@ -1157,7 +1157,7 @@ void loginfunc() { // Option to log-in or sign-up
     sprite_gbackground.setPosition(1, 1);
 
     // Option to go back. Pressing this should lead back to main screen
-    font.loadFromFile("/usr/share/fonts/truetype/ubuntu/Ubuntu-BI.ttf");
+    font.loadFromFile("External Files/Ubuntu-BI.ttf");
     back.setFont(font);
     back.setString("Go Back");
     back.setFillColor(sf::Color::White);
