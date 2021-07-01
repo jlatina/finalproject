@@ -213,7 +213,10 @@ class interface {
 
 };
 
-
+//   Title: Button class source code
+//   Author: TermSpar YouTube channel
+//   Date: 2019
+// Availability: https://www.youtube.com/watch?v=T31MoLJws4U&t=570s
 class Button {
 
  public:
@@ -226,7 +229,7 @@ class Button {
     text.setFont(font);
   }
 
-
+  
   Button(string text_s, int charsize, sf::Vector2f size, sf::Color textColor, sf::Color BackgColor) {
 
     shape_Button.setSize(size);
@@ -285,6 +288,11 @@ class Button {
     window.draw(text);
   }
 };
+
+//   Title: Textfield class source code
+//   Author: TermSpar YouTube channel
+//   Date: 2019
+// Availability: https://www.youtube.com/watch?v=T31MoLJws4U&t=570s
 
 class Textfield {
  public:
