@@ -58,7 +58,7 @@ class interface {
   void windowfunc(sf::RenderWindow &window) {  // Main Menu
     sf::Event event;
     std::time_t time = std::time(NULL);
-    time_t newtime = time;  // change this
+    time_t newtime = time;
     std::tm now = *std::localtime(&newtime);
 
     int hrang,
@@ -422,12 +422,6 @@ class Mental_Math {
 
   void First_Screen() {
 
-    // sf::RenderWindow window(sf::VideoMode(1350, 1350), "Math Wizardry");
-
-    // setting window location to the center of the screen
-    // window.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width * 0.5 - window.getSize().x * 0.5, sf::VideoMode::getDesktopMode().height * 0.5 - window.getSize().y * 0.5));
-
-
     if(!texture.loadFromFile("/home/ece-student/Desktop/inclass/paper1.jpg")) {
 
       std::cout << "Load Failed" << "\n";
@@ -553,11 +547,6 @@ class Mental_Math {
   void Game_Screen() {
 
     sf::Event gameEvent;
-
-    // sf::RenderWindow window(sf::VideoMode(1350, 1350), "MATH WIZARDRY");
-
-    // setting window position to the center of the screen
-    // window.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width * 0.5 - window.getSize().x * 0.5, sf::VideoMode::getDesktopMode().height * 0.5 - window.getSize().y * 0.5));
 
     if(!texture.loadFromFile("/home/ece-student/Desktop/inclass/paper1.jpg")) {
 
@@ -772,12 +761,6 @@ class Mental_Math {
 
   void Final_Screen(int score_value, int difficulty) {
 
-    // sf::RenderWindow window(sf::VideoMode(1350, 1350), "MATH WIZARDRY");
-
-    // setting window position to the center of the screen
-    // window.setPosition(sf::Vector2i(sf::VideoMode::getDesktopMode().width * 0.5 - window.getSize().x * 0.5, sf::VideoMode::getDesktopMode().height * 0.5 - window.getSize().y * 0.5));
-
-
     if(!texture.loadFromFile("/home/ece-student/Desktop/inclass/paper3.png")) {
 
       std::cout << "Load Failed" << "\n";
@@ -841,11 +824,6 @@ class Mental_Math {
           highscores.close();
 
       }
-
-      
-      // function to count list of high scores
-      // replace high score file with temp
-      // read it
 
       highscores.close();
     } else {
@@ -995,7 +973,6 @@ void playgame() { // Ready to play game text
     choose.setFont(font);
     choose.setString("Are you ready to become a Math Wizard?");
     choose.setFillColor(sf::Color::White);
-    // choose.setOutlineColor(sf::Color::Red);
     choose.setOutlineThickness(2);
     choose.setPosition(140, 200);
     choose.setCharacterSize(55);
@@ -1063,11 +1040,8 @@ void playgame() { // Ready to play game text
 
         }
 
-        // bool* global_open = &is_open;
         if (dx2 > -860 && dx2 < -350 && dy2 > -350 && dy2 < -320) {
           Mental_Math Mental_Math_Game;
-          // window.close();
-        // *global_open = true;
           Mental_Math_Game.First_Screen();
         }
 
