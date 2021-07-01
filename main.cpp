@@ -76,7 +76,7 @@ class interface {
     texture_background.loadFromImage(box_background);
     sf::Sprite sprite_background;
     sprite_background.setTexture(texture_background);
-    sprite_background.scale(sf::Vector2f(1.6, 1.6)); //1st wider 2nd higher
+    sprite_background.scale(sf::Vector2f(1.6, 1.6)); 
     sprite_background.setPosition(1, 1);
 
 // create the first rectangle
@@ -120,7 +120,7 @@ class interface {
     clocktext.setCharacterSize(24);
     clocktext.setPosition(610, 650);
     clocktext.setCharacterSize(30);
-    // clocktext.setStyle(sf::Text::Style::Bold | sf::Text::Style::Underlined);
+
 
 // Create login/sign -up text
     font.loadFromFile("/usr/share/fonts/truetype/ubuntu/Ubuntu-BI.ttf");
@@ -134,12 +134,10 @@ class interface {
     double time_now = accuratetime();
 
     window.clear();
-    // sf::Event event;
     window.draw(sprite_background);
     window.draw(first);
     window.draw(second);
     window.draw(word_pg);
-    // window.draw(word_la);
     window.draw(username);
     window.draw(login);
 
@@ -203,7 +201,6 @@ class interface {
 
         if (dx3 < 200 && dy3 < 170) {
           std::cout << "Login button pressed" << "\n";
-          // std::cout << "dx: " << dx << "dy: " << dy << "\n";
           loginfunc();
           break;
         }
@@ -766,7 +763,7 @@ class Mental_Math {
 
 
       window.clear();
-      // window.close();
+      
       Final_Screen(score_value, difficulty);
 
     }
@@ -917,7 +914,7 @@ class Mental_Math {
 
         if(gameEvent.type == sf::Event::MouseButtonPressed) {
           if(return_2_menu_button.isMouseHover(window)) {
-            // window.close();
+            
             First_Screen();
 
 
@@ -1103,7 +1100,7 @@ void loginfunc() { // Option to log-in or sign-up
 
 
 
-    // event func caused problems so i just copied and pasted its content
+    
     auto location2 = back.getPosition();
     double dx2 = location2.x - event.mouseButton.x;
     double dy2 = location2.y - event.mouseButton.y;
