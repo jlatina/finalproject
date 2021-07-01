@@ -46,8 +46,8 @@ sf::RenderWindow window(sf::VideoMode(200, 200), "Rectangle");
 }
 ```
  ### Running Program 
- 1. Navigate through terminal to the location of main.cpp 
- 2. Compile file
+ 1. Navigate to the location of main.cpp using terminal 
+ 2. Compile file with g++
  3. Run executable
 
  
