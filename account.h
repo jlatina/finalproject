@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <cstdio>
 
 using std::string;
 using std::cin;
@@ -12,7 +13,7 @@ using std::ofstream;
 class account_manager {
 
 public:
-    
+
     string password,
            username,
            attempted_username,
@@ -30,7 +31,7 @@ public:
 
     ofstream append_to_file;
 
-    string login(ifstream *ifs){
+    string login(ifstream *ifs) {
 
         // (*ifs).open("accountinfo.txt");
         cout << "Enter username: ";
@@ -38,13 +39,13 @@ public:
         while((*ifs) >> strings) {
 
             count++;
-            if (attempted_username == strings){
+            if (attempted_username == strings) {
                 exists = true;
                 break;
-            } else { 
+            } else {
                 exists = false;
             }
-            
+
             getline((*ifs), line, '\n');
         }
 
@@ -56,9 +57,9 @@ public:
             (*ifs).open("accountinfo.txt");
             getline((*ifs), line2, ';');
             while((*ifs) >> strings2) {
-                
+
                 count2++;
-                if (attempted_password == strings2 && count == count2){
+                if (attempted_password == strings2 && count == count2) {
                     exists = true;
                     break;
                 } else {
@@ -81,61 +82,114 @@ public:
         else
             cout << "Username doesn't exist in database" << "\n";
 
-    return returnuser;
+        (*ifs).close();
+        return returnuser;
     }
 
-    void account_register(ifstream *ifs){
+    string account_register(ifstream *ifs) {
 
-    cout << "Create username: ";
-    cin >> new_username;
+        string newuser;
+        cout << "Create username: ";
+        cin >> new_username;
 
-    while((*ifs) >> strings3)
-    {
+        while((*ifs) >> strings3)
+        {
 
-        if (new_username == strings3){
-            exists = true;
-            break;
-        } 
-        getline((*ifs), line3, '\n');
+            if (new_username == strings3) {
+                exists = true;
+                break;
+            }
+            getline((*ifs), line3, '\n');
+
+        }
+
+        if (exists == true) cout << "Sorry, that username already exists!" << "\n";
+        else {
+            cout << "Please create your password: ";
+            cin >> new_password;
+            append_to_file.open("accountinfo.txt", std::ios_base::app);
+            append_to_file << new_username << " ; " << new_password << "\n";
+            append_to_file.close();
+            append_to_file.open("highscores.txt",  std::ios_base::app);
+            append_to_file << "0" << "\n";
+            cout << "Your account has been created!" << "\n";
+            newuser = new_username;
+        }
+
+        return newuser;
+    }
+
+
+
+    int return_count(string username, ifstream *ifs) {
+
+        int the_count = 0;
+        while((*ifs) >> strings) {
+
+            the_count++;
+
+            if (username == strings) {
+                break;
+            }
+
+            getline((*ifs), line, '\n');
+
+        }
+
+        return the_count;
+    }
+
+
+    string return_line_count(int count, ifstream *ifs) {
+
+        int the_count = 0;
+        while((*ifs) >> strings) {
+
+            the_count++;
+
+            if(count == the_count) {
+                break;
+            }
+
+            getline((*ifs), line, '\n');
+        }
+
+
+
+        return strings;
+    }
+
+
+    void modifyscore(int count, ifstream *ifs, string oldhighscore, string newhighscore) {
+
+
+        // string oldhighscore = "42";
+        // string newhighscore = "67";
+        string replace = oldhighscore;
+        string strNew = newhighscore;
+        string tempstr;
+        ifstream filein("highscores.txt");
+        ofstream fileout("temp.txt");
+        int count_line = 0;
+
+        while(filein >> tempstr)
+        {
+            count_line++;
+            if(count_line == count)
+            {
+                tempstr = newhighscore;
+
+            }
+            tempstr += "\n";
+            fileout << tempstr;
+        }
+
+        std::remove("highscores.txt");
+        std::rename("temp.txt", "highscores.txt");
 
     }
 
-    if (exists == true) cout << "Sorry, that username already exists!" << "\n";
-    else {
-        cout << "Please create your password: ";
-        cin >> new_password;
-        append_to_file.open("accountinfo.txt", std::ios_base::app);
-        append_to_file << new_username << " ; " << new_password << " | " << "highscore" << "\n";
-        cout << "Your account has been created!" << "\n";
-    }
 
-    }
+
 
 };
-
-
-// int main() {
-
-//     account_manager account;
-    // ifstream ifs;
-
-    // ifs.open("accountinfo.txt");
-
-    // if (!ifs) {
-    //     ofstream create_file("accountinfo.txt");
-    //     ifs.open("accountinfo.txt");
-    // }
-
-
-//     // if user clicks sign up button:
-
-//     // account.account_register(&ifs);
-
-//     // if user clicks login button:
-
-//     account.login(&ifs);
-
-//     ifs.close();
-
-//     return 0;
-// }
