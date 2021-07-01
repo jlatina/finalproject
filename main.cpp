@@ -76,7 +76,7 @@ class interface {
     texture_background.loadFromImage(box_background);
     sf::Sprite sprite_background;
     sprite_background.setTexture(texture_background);
-    sprite_background.scale(sf::Vector2f(1.6, 1.5)); //1st wider 2nd higher
+    sprite_background.scale(sf::Vector2f(1.6, 1.6)); //1st wider 2nd higher
     sprite_background.setPosition(1, 1);
 
 // create the first rectangle
@@ -989,7 +989,7 @@ void playgame() { // Ready to play game text
     texture_gbackground.loadFromImage(box_gbackground);
     sf::Sprite sprite_gbackground;
     sprite_gbackground.setTexture(texture_gbackground);
-    sprite_gbackground.scale(sf::Vector2f(1.4, 1.3)); //1st wider 2nd higher
+    sprite_gbackground.scale(sf::Vector2f(1.4, 1.4)); //1st wider 2nd higher
     sprite_gbackground.setPosition(1, 1);
 
 // "Are you ready to become a Math Wizard?" text
@@ -1182,7 +1182,7 @@ void loginfunc() { // Option to log-in or sign-up
     texture_gbackground.loadFromImage(box_gbackground);
     sf::Sprite sprite_gbackground;
     sprite_gbackground.setTexture(texture_gbackground);
-    sprite_gbackground.scale(sf::Vector2f(1.4, 1.3)); //1st wider 2nd higher
+    sprite_gbackground.scale(sf::Vector2f(1.4, 1.4)); //1st wider 2nd higher
     sprite_gbackground.setPosition(1, 1);
 
     // Option to go back. Pressing this should lead back to main screen
