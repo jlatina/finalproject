@@ -33,7 +33,6 @@ public:
 
     string login(ifstream *ifs) {
 
-        // (*ifs).open("accountinfo.txt");
         cout << "Enter username: ";
         cin >> attempted_username;
         while((*ifs) >> strings) {
@@ -110,8 +109,9 @@ public:
             append_to_file.open("accountinfo.txt", std::ios_base::app);
             append_to_file << new_username << " ; " << new_password << "\n";
             append_to_file.close();
-            append_to_file.open("highscores.txt",  std::ios_base::app);
+            append_to_file.open("highscores.txt", std::ios_base::app);
             append_to_file << "0" << "\n";
+            append_to_file.close();            
             cout << "Your account has been created!" << "\n";
             newuser = new_username;
         }
@@ -162,9 +162,6 @@ public:
 
     void modifyscore(int count, ifstream *ifs, string oldhighscore, string newhighscore) {
 
-
-        // string oldhighscore = "42";
-        // string newhighscore = "67";
         string replace = oldhighscore;
         string strNew = newhighscore;
         string tempstr;
@@ -184,9 +181,11 @@ public:
             fileout << tempstr;
         }
 
+
+        filein.close();
+        fileout.close();
         std::remove("highscores.txt");
         std::rename("temp.txt", "highscores.txt");
-
     }
 
 
