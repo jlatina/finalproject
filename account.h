@@ -31,6 +31,8 @@ public:
 
     ofstream append_to_file;
 
+    // function for logging in a user
+    
     string login(ifstream *ifs) {
 
         cout << "Enter username: ";
@@ -84,6 +86,8 @@ public:
         (*ifs).close();
         return returnuser;
     }
+    
+    // function for creating a new account
 
     string account_register(ifstream *ifs) {
 
@@ -120,7 +124,8 @@ public:
     }
 
 
-
+    // function for counting the amount of lines it takes to reach a username in accountinfo.txt
+    
     int return_count(string username, ifstream *ifs) {
 
         int the_count = 0;
@@ -139,7 +144,9 @@ public:
         return the_count;
     }
 
-
+    // function for obtaining a high score from highscores.txt
+    // uses count to iterate through the file x amount of times
+    
     string return_line_count(int count, ifstream *ifs) {
 
         int the_count = 0;
@@ -159,11 +166,10 @@ public:
         return strings;
     }
 
-
+    // function for modifying highscores.txt if a user obtains a new high score
+    
     void modifyscore(int count, ifstream *ifs, string oldhighscore, string newhighscore) {
 
-        string replace = oldhighscore;
-        string strNew = newhighscore;
         string tempstr;
         ifstream filein("highscores.txt");
         ofstream fileout("temp.txt");
