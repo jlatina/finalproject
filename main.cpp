@@ -402,7 +402,7 @@ class Textfield {
 class Mental_Math {
 
  public:
-  intnumber_1, number_2, result, difficulty, random_op_number;
+  int number_1, number_2, result, difficulty, random_op_number;
   string player_answer;
   char current_operation;
   vector<int> easy {100, 100, 10, 100};
