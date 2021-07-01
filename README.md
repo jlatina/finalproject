@@ -45,6 +45,18 @@ sf::RenderWindow window(sf::VideoMode(200, 200), "Rectangle");
     return 0;
 }
 ```
+ ### Running Program 
+ 1. Navigate through terminal where the file is 
+ 2. Compile file
+ 3. Run executable
+
+ 
+```c++
+$ cd /Desktop
+$/Desktop g++ main.cpp -o game
+$/Desktop game
+```
+
 ## Further Support 
 For issues dealing with SFML implementation visit (https://www.sfml-dev.org/tutorials/2.5/).
 
