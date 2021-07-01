@@ -1,5 +1,5 @@
 
-# Math Wizardy Final Project App
+# Math Wizardry Final Project App
 
 ## Description 
 The Math Wizardry app serves to encourage and motivate children ages 8 and up in challenging their brain outside of school. Due to Covid-19 and the vast, even detrimental  repercussions it has had on society, the group decided to focus their attention on how children's educational lives have been affected. While Zoom has provided a great platform for education to still continue, students especially those enrolled in preliminary school have shown little to no progress in retaining the information that has been taught to them. It has become rather difficult for these children to maintain focus and many dread logging onto their computer to learn. In addition, the group was influenced by already existing mental math games and math competitions that they once participated in as children that challenged them to generate quick and correct solutions. This app brings back the fun in learning math as the user is able to keep track of their progress whenever they log in. This app is a great alternative for parents who do not feel comfortable with their children becoming obsessed with technology. Math Wizardry  can be used as an incentive and a healthier way to view technology. 
