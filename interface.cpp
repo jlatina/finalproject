@@ -1,16 +1,12 @@
 // Copyright Victoria Carlsten
 
-
-// Copyright Victoria Carlsten carlsten@bu.edu
-
 #include <chrono>
 #include <ctime>
 #include <iostream>
-#include <SFML/Graphics.hpp>
-#include "math_wizardry.h"
-#include "account.h"
 #include <fstream>
-// #include <SFML/Audio.hpp>
+#include <SFML/Graphics.hpp>
+#include "account.h"
+#include "math_wizardry.h"
 
 using std::to_string;
 using std::string;
@@ -32,34 +28,22 @@ sf::Text back;
 sf::Text login;
 sf::Text choose;
 sf::Text option;
+sf::Text logintext;
+sf::Text signup;
+sf::Text yestext;
+string logged_in_username;
+
 void playgame();
 void loginfunc();
-string logged_in_username;
 
 class interface {
  public:
 
+  account_manager account;
+  bool account_exists;
 
-sf::Text word_pg;
-sf::Text username;
-sf::Text clocktext;
-sf::Text back;
-sf::Text login;
-sf::Text choose;
-sf::Text option;
-// sf::Music music;
-
-bool account_exists;
-
- account_manager account;
-
-  void windowfunc() {
-
-
+  void windowfunc() {  // Main Menu
     sf::Event event;
-    Mental_Math Mental_Math_Game;
-
-
     std::time_t time = std::time(NULL);
     time_t newtime = time;  // change this
     std::tm now = *std::localtime(&newtime);
@@ -74,12 +58,12 @@ bool account_exists;
 
 // Create background image
     sf::Image box_background;
-    // box_background.loadFromFile("background.png");
+    box_background.loadFromFile("galaxy.png");
     sf::Texture texture_background;
     texture_background.loadFromImage(box_background);
     sf::Sprite sprite_background;
     sprite_background.setTexture(texture_background);
-    sprite_background.scale(sf::Vector2f(1.5, 1.4)); //1st wider 2nd higher
+    sprite_background.scale(sf::Vector2f(1.6, 1.5)); //1st wider 2nd higher
     sprite_background.setPosition(1, 1);
 
 // create the first rectangle
@@ -107,12 +91,11 @@ bool account_exists;
 
 // Create "Username"
     username.setFont(font);
-    if (logged_in_username == ""){
-    username.setString("Not Logged In");
-  } else {
-
-    username.setString(logged_in_username);
-  }
+    if (logged_in_username == "") {
+      username.setString("Not Logged In");
+    } else {
+      username.setString(logged_in_username);
+    }
     username.setFillColor(sf::Color::White);
     username.setPosition(1090, 80);
     username.setStyle(sf::Text::Style::Bold | sf::Text::Style::Underlined);
@@ -133,10 +116,6 @@ bool account_exists;
     login.setFillColor(sf::Color::White);
     login.setPosition(100, 82);
     login.setStyle(sf::Text::Style::Bold | sf::Text::Style::Underlined);
-
-// Music
-    // music.openFromFile("wii.wav");
-    // music.play();
 
     sf::Clock tracktime;
     double time_now = accuratetime();
@@ -196,6 +175,7 @@ bool account_exists;
 
         if (dx < 50 && dy < 50) {
           std::cout << "Play button pressed" << "\n";
+          click = true;
           playgame();
           break;
         }
@@ -208,9 +188,9 @@ bool account_exists;
         double dx3 = location3.x - event.mouseButton.x;
         double dy3 = location3.y - event.mouseButton.y;
 
-        if (dx3 < 200  && dy3 < 170) {
+        if (dx3 < 200 && dy3 < 170) {
           std::cout << "Login button pressed" << "\n";
-          std::cout << "dx: " << dx << "dy: " << dy << "\n";
+          // std::cout << "dx: " << dx << "dy: " << dy << "\n";
           loginfunc();
           break;
         }
@@ -224,7 +204,7 @@ bool account_exists;
 };
 
 
-void eventfunc() {
+void eventfunc() { // Close window + Back Button
   sf::Event event;
   interface interface;
   auto location2 = back.getPosition();
@@ -236,52 +216,50 @@ void eventfunc() {
     if (event.type == sf::Event::Closed)
       window.close();
 
+
+
     if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Escape))
       window.close();
 
     if (event.type == sf::Event::MouseButtonPressed) {
-      // dx2 = 0;
-      // dy2 = 0;
       dx2 = location2.x - event.mouseButton.x;
       dy2 = location2.y - event.mouseButton.y;
+      std::cout << "dx2: " << dx2 << " dy2: " << dy2 << "\n";
 
 
       if (dx2 > -200 && dy2 > -50) {
         std::cout << "Back button pressed" << "\n";
-        // break;
-        // while (window.isOpen()) {
 
         while(window.isOpen()) {
           interface.windowfunc();
           eventfunc();
         }
-      
+
+
       }
 
     }
   }
 }
 
-void playgame() {
+void playgame() { // Ready to play game text
 
-  interface interace;
+  interface interface;
   while (window.isOpen()) {
-// show game options
-
 
     eventfunc();
 
 // Background
     sf::Image box_gbackground;
-    // box_gbackground.loadFromFile("gamebackground.PNG");
+    box_gbackground.loadFromFile("magic.png");
     sf::Texture texture_gbackground;
     texture_gbackground.loadFromImage(box_gbackground);
     sf::Sprite sprite_gbackground;
     sprite_gbackground.setTexture(texture_gbackground);
-    sprite_gbackground.scale(sf::Vector2f(1.5, 1.4)); //1st wider 2nd higher
+    sprite_gbackground.scale(sf::Vector2f(1.4, 1.3)); //1st wider 2nd higher
     sprite_gbackground.setPosition(1, 1);
 
-// "Please Choose a Game" text
+// "Are you ready to become a Math Wizard?" text
     sf::Font font;
     font.loadFromFile("/usr/share/fonts/truetype/ubuntu/Ubuntu-BI.ttf");
     choose.setFont(font);
@@ -289,53 +267,23 @@ void playgame() {
     choose.setFillColor(sf::Color::White);
     // choose.setOutlineColor(sf::Color::Red);
     choose.setOutlineThickness(2);
-    choose.setPosition(280, 80);
-    choose.setCharacterSize(40);
-    choose.setStyle(sf::Text::Style::Bold | sf::Text::Style::Underlined);
+    choose.setPosition(140, 200);
+    choose.setCharacterSize(55);
+    choose.setStyle(sf::Text::Style::Bold);
 
-// Frame for Gordon
-    sf::RectangleShape gordon_rec(sf::Vector2f(30, 4));
-    gordon_rec.setFillColor(sf::Color::White);
-    gordon_rec.setPosition(710, 280);
-    gordon_rec.setSize(sf::Vector2f(400, 250));
+    // Rectangle for yes text
+    sf::RectangleShape rec(sf::Vector2f(30, 4));
+    rec.setFillColor(sf::Color::Blue);
+    rec.setPosition(410, 350);
+    rec.setSize(sf::Vector2f(520, 60));
 
-// Filler frame for Gordon
-    sf::RectangleShape gordon_rec1(sf::Vector2f(30, 4));
-    gordon_rec1.setFillColor(sf::Color::Black);
-    gordon_rec1.setPosition(724, 290);
-    gordon_rec1.setSize(sf::Vector2f(370, 230));
+    // Yes text
+    yestext.setFont(font);
+    yestext.setString("Yes, let the magic begin!");
+    yestext.setFillColor(sf::Color::White);
+    yestext.setPosition(410, 350);
+    yestext.setCharacterSize(45);
 
-// Gordon picture
-    sf::Image box;
-    // box.loadFromFile("gordon.png");
-    sf::Texture texture;
-    texture.loadFromImage(box);
-    sf::Sprite sprite;
-    sprite.setTexture(texture);
-    sprite.scale(sf::Vector2f(0.6, 0.7)); //1st wider 2nd higher
-    sprite.setPosition(750, 300);
-
-// Frame for math picture
-    sf::RectangleShape math(sf::Vector2f(30, 4));
-    math.setFillColor(sf::Color::White);
-    math.setPosition(230, 280);
-    math.setSize(sf::Vector2f(445, 249));
-
-// Filler frame for math picture
-    sf::RectangleShape math1(sf::Vector2f(30, 4));
-    math1.setFillColor(sf::Color::Black);
-    math1.setPosition(250, 290);
-    math1.setSize(sf::Vector2f(400, 230));
-
-// Math picture
-    sf::Image box1;
-    // box1.loadFromFile("brain.png");
-    sf::Texture texture1;
-    texture1.loadFromImage(box1);
-    sf::Sprite sprite1;
-    sprite1.setTexture(texture1);
-    sprite1.scale(sf::Vector2f(0.5, 0.475)); //1st wider 2nd higher
-    sprite1.setPosition(275, 300);
 
 // Option to go back. Pressing this should lead back to main screen
     font.loadFromFile("/usr/share/fonts/truetype/ubuntu/Ubuntu-BI.ttf");
@@ -350,64 +298,168 @@ void playgame() {
     window.draw(sprite_gbackground);
     window.draw(choose);
     window.draw(back);
-    window.draw(gordon_rec);
-    window.draw(gordon_rec1);
-    window.draw(math);
-    window.draw(math1);
-    window.draw(sprite);
-    window.draw(sprite1);
+    window.draw(rec);
+    window.draw(yestext);
     window.display();
-  }
 
-}
+
+    sf::Event event;
+    auto location2 = back.getPosition();
+    double dx2 = location2.x - event.mouseButton.x;
+    double dy2 = location2.y - event.mouseButton.y;
+
+    while (window.pollEvent(event)) {
+      if (event.type == sf::Event::Closed)
+        window.close();
+
+      if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Escape))
+        window.close();
+
+      if (event.type == sf::Event::MouseButtonPressed) {
+        dx2 = location2.x - event.mouseButton.x;
+        dy2 = location2.y - event.mouseButton.y;
+
+        if (dx2 > -860 && dx2 < -350 && dy2 > -350 && dy2 < -320) {
+          Mental_Math Mental_Math_Game;
+          window.close();
+          Mental_Math_Game.First_Screen();
+          }
+
+
+          }
+
+        }
+
+      }
+    }
+
 
 void loginfunc() { // Option to log-in or sign-up
 
-    ifstream ifs;
+  sf::Event event;
+  account_manager account;
+  interface interface;
 
+  ifstream ifs;
+
+  ifs.open("accountinfo.txt");
+
+  if (!ifs) {
+    ofstream create_file("accountinfo.txt");
     ifs.open("accountinfo.txt");
-
-    if (!ifs) {
-        ofstream create_file("accountinfo.txt");
-        ifs.open("accountinfo.txt");
-    }
+  }
 
 
   while (window.isOpen()) {
 
-  account_manager account;
-  interface interface;
 
-    eventfunc();
 
+    // event func caused problems so i just copied and pasted its content
+    auto location2 = back.getPosition();
+    double dx2 = location2.x - event.mouseButton.x;
+    double dy2 = location2.y - event.mouseButton.y;
+
+    while (window.pollEvent(event)) {
+      if (event.type == sf::Event::Closed)
+        window.close();
+
+      if ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Escape))
+        window.close();
+
+      if (event.type == sf::Event::MouseButtonPressed) {
+        dx2 = location2.x - event.mouseButton.x;
+        dy2 = location2.y - event.mouseButton.y;
+
+        // std::cout << "dx2: " << dy2 << " dxy: " << dy2 << "\n";
+
+        // login button press event
+
+        if (dx2 < -270 && dy2 > -290) {
+
+          string login_username = account.login(&ifs);
+          bool *account_bool = &interface.account_exists;
+          string *ptr = &logged_in_username;
+
+          if (login_username != "") {
+            *account_bool = true;
+            *ptr = login_username;
+            interface.windowfunc();
+            break;
+          }
+
+
+
+
+        }
+
+
+
+        if (dx2 > -200 && dy2 > -50) {
+          std::cout << "Back button pressed" << "\n";
+
+          while(window.isOpen()) {
+            interface.windowfunc();
+            eventfunc();
+          }
+
+        }
+
+      }
+    }
+    sf::Font font;
     sf::Image box_gbackground;
-    // box_gbackground.loadFromFile("gamebackground.PNG");
+    box_gbackground.loadFromFile("magic.png");
     sf::Texture texture_gbackground;
     texture_gbackground.loadFromImage(box_gbackground);
     sf::Sprite sprite_gbackground;
     sprite_gbackground.setTexture(texture_gbackground);
-    sprite_gbackground.scale(sf::Vector2f(1.5, 1.4)); //1st wider 2nd higher
+    sprite_gbackground.scale(sf::Vector2f(1.4, 1.3)); //1st wider 2nd higher
     sprite_gbackground.setPosition(1, 1);
+
+    // Option to go back. Pressing this should lead back to main screen
+    font.loadFromFile("/usr/share/fonts/truetype/ubuntu/Ubuntu-BI.ttf");
+    back.setFont(font);
+    back.setString("Go Back");
+    back.setFillColor(sf::Color::White);
+    back.setPosition(60, 40);
+    back.setCharacterSize(28);
+
+    // Rectangle for login text
+    sf::RectangleShape first(sf::Vector2f(30, 4));
+    first.setFillColor(sf::Color::Blue);
+    first.setPosition(430, 275);
+    first.setSize(sf::Vector2f(450, 80));
+
+    // Text login
+    logintext.setFont(font);
+    logintext.setString("Log In");
+    logintext.setFillColor(sf::Color::White);
+    logintext.setPosition(570, 270);
+    logintext.setCharacterSize(60);
+
+    // Rectangle for signup text
+    sf::RectangleShape first2(sf::Vector2f(30, 4));
+    first2.setFillColor(sf::Color::Blue);
+    first2.setPosition(430, 370);
+    first2.setSize(sf::Vector2f(450, 80));
+
+    // Text signup
+    signup.setFont(font);
+    signup.setString("Sign-up");
+    signup.setFillColor(sf::Color::White);
+    signup.setPosition(550, 370);
+    signup.setCharacterSize(60);
 
     window.clear();
     window.draw(sprite_gbackground);
+    window.draw(back);
+    window.draw(first);
+    window.draw(logintext);
+    window.draw(first2);
+    window.draw(signup);
     window.display();
-   
-    string login_username = account.login(&ifs);
-    bool *account_bool = &interface.account_exists;
-    // string *username_ptr = &account.username;
-    string *ptr = &logged_in_username;
-      
-    if (login_username != "") {
-    *account_bool = true;
-    *ptr = login_username;
-    interface.windowfunc();
-    break;
   }
-
   ifs.close();
-  }
-
 }
 
 
