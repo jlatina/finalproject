@@ -63,7 +63,7 @@ class interface {
     texture_background.loadFromImage(box_background);
     sf::Sprite sprite_background;
     sprite_background.setTexture(texture_background);
-    sprite_background.scale(sf::Vector2f(1.6, 1.5)); //1st wider 2nd higher
+    sprite_background.scale(sf::Vector2f(1.6, 1.6)); //1st wider 2nd higher
     sprite_background.setPosition(1, 1);
 
 // create the first rectangle
@@ -256,7 +256,7 @@ void playgame() { // Ready to play game text
     texture_gbackground.loadFromImage(box_gbackground);
     sf::Sprite sprite_gbackground;
     sprite_gbackground.setTexture(texture_gbackground);
-    sprite_gbackground.scale(sf::Vector2f(1.4, 1.3)); //1st wider 2nd higher
+    sprite_gbackground.scale(sf::Vector2f(1.4, 1.4)); //1st wider 2nd higher
     sprite_gbackground.setPosition(1, 1);
 
 // "Are you ready to become a Math Wizard?" text
@@ -265,7 +265,6 @@ void playgame() { // Ready to play game text
     choose.setFont(font);
     choose.setString("Are you ready to become a Math Wizard?");
     choose.setFillColor(sf::Color::White);
-    // choose.setOutlineColor(sf::Color::Red);
     choose.setOutlineThickness(2);
     choose.setPosition(140, 200);
     choose.setCharacterSize(55);
@@ -354,7 +353,6 @@ void loginfunc() { // Option to log-in or sign-up
 
 
 
-    // event func caused problems so i just copied and pasted its content
     auto location2 = back.getPosition();
     double dx2 = location2.x - event.mouseButton.x;
     double dy2 = location2.y - event.mouseButton.y;
@@ -370,9 +368,7 @@ void loginfunc() { // Option to log-in or sign-up
         dx2 = location2.x - event.mouseButton.x;
         dy2 = location2.y - event.mouseButton.y;
 
-        // std::cout << "dx2: " << dy2 << " dxy: " << dy2 << "\n";
-
-        // login button press event
+   
 
         if (dx2 < -270 && dy2 > -290) {
 
@@ -413,7 +409,7 @@ void loginfunc() { // Option to log-in or sign-up
     texture_gbackground.loadFromImage(box_gbackground);
     sf::Sprite sprite_gbackground;
     sprite_gbackground.setTexture(texture_gbackground);
-    sprite_gbackground.scale(sf::Vector2f(1.4, 1.3)); //1st wider 2nd higher
+    sprite_gbackground.scale(sf::Vector2f(1.4, 1.4)); 
     sprite_gbackground.setPosition(1, 1);
 
     // Option to go back. Pressing this should lead back to main screen
