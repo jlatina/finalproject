@@ -51,7 +51,7 @@ sf::RenderWindow window(sf::VideoMode(200, 200), "Rectangle");
  3. Run executable
 
  
-```c++
+```bash
 $ cd /Desktop
 $/Desktop g++ main.cpp -o game -lsfml-window -lsfml-graphics -lsfml-system
 $/Desktop game
